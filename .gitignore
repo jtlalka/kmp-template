@@ -1,0 +1,24 @@
+# Kotlin
+.kotlin/
+
+# Android Studio
+.idea/*
+!.idea/codeStyles/
+!.idea/fileTemplates/
+
+# Xcode
+xcuserdata/
+
+# WASM
+kotlin-js-store/
+
+# Gradle files
+.gradle/
+**/build/
+!src/**/build/
+
+# MacOS
+.DS_Store
+
+# Local
+local.properties
