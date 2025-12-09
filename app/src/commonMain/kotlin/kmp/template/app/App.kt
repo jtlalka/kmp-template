@@ -6,7 +6,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import kmp.template.environment.Environment
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.getKoin
 
 @Preview
 @Composable
@@ -15,6 +17,7 @@ fun App() {
         contentAlignment = Alignment.Center,
         modifier = Modifier.fillMaxSize()
     ) {
-        Text(text = "KMP Template")
+        val environment = getKoin().get<Environment>()
+        Text(text = "KMP Template\n(debug: ${environment.debug})")
     }
 }

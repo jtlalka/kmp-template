@@ -1,10 +1,8 @@
 package kmp.template.app.di
 
 import org.koin.core.module.Module
-import org.koin.dsl.module
 
-internal val appModule: Module = module {
-}
+internal expect val appModule: Module
 
 internal val featureModules: List<Module> = listOf(
 )
