@@ -11,6 +11,8 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
+            implementation(projects.module.library.foundation)
+
             implementation(libs.bundles.compose)
             implementation(libs.koin.compose)
         }
