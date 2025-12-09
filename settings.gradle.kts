@@ -20,5 +20,6 @@ rootProject.name = "kmp-template"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(
-    ":app"
+    ":app",
+    ":module:library:foundation"
 )
