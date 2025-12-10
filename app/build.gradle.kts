@@ -11,6 +11,7 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
+            implementation(projects.module.library.design)
             implementation(projects.module.library.environment)
             implementation(projects.module.library.foundation)
             implementation(projects.module.library.network)
@@ -49,6 +50,17 @@ android {
         getByName("release") {
             isMinifyEnabled = false
         }
+    }
+    lint {
+        abortOnError = true
+        checkAllWarnings = true
+        checkDependencies = true
+        checkReleaseBuilds = false
+        ignoreTestSources = true
+        warningsAsErrors = false
+        disable += listOf(
+            "InvalidPackage"
+        )
     }
     dependencies {
         debugImplementation(libs.compose.ui.tooling)

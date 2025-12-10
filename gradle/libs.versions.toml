@@ -6,7 +6,6 @@ android-sdk-target = "36"
 androidx-activity-compose = "1.12.1"
 androidx-lifecycle = "2.9.6"
 compose = "1.9.3"
-compose-icons = "1.7.3"
 compose-material3 = "1.9.0"
 java = "17"
 kermit = "2.0.8"
@@ -32,7 +31,6 @@ compose-animation = { module = "org.jetbrains.compose.animation:animation", vers
 compose-components-preview = { module = "org.jetbrains.compose.components:components-ui-tooling-preview", version.ref = "compose" }
 compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "compose" }
 compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "compose" }
-compose-material-icons = { module = "org.jetbrains.compose.material:material-icons-core", version.ref = "compose-icons" }
 compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "compose-material3" }
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose" }
 compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "compose" }
@@ -71,7 +69,6 @@ compose = [
     "compose-components-preview",
     "compose-components-resources",
     "compose-foundation",
-    "compose-material-icons",
     "compose-material3",
     "compose-runtime",
     "compose-ui"
