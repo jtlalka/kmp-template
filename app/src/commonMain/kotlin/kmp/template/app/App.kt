@@ -10,6 +10,12 @@ import kmp.template.environment.Environment
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.getKoin
 
+/**
+ * Root composable that displays a centered app label including the current environment's debug flag.
+ *
+ * The composable fills the available space and centers a single text element reading
+ * "KMP Template" with the `debug` value obtained from the runtime DI-provided Environment.
+ */
 @Preview
 @Composable
 fun App() {

@@ -15,7 +15,13 @@ internal class IosEnvironment : Environment {
 
     override val versionCode = getInfoByKey("CFBundleVersion")
 
-    private fun getInfoByKey(key: String): String =
+    /**
+             * Retrieve a string value from the main bundle's Info.plist for the given key.
+             *
+             * @param key The Info.plist key to look up (for example `"CFBundleIdentifier"`).
+             * @return The string value associated with `key`, or an empty string if the key is missing or not a string.
+             */
+            private fun getInfoByKey(key: String): String =
         NSBundle.mainBundle
             .infoDictionary?.get(key) as? String ?: ""
 
