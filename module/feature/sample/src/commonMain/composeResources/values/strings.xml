@@ -1,0 +1,10 @@
+<resources>
+    <string name="sample_screen_header">Kotlin Multiplatform Project</string>
+
+    <string name="sample_environment_screen_header">Environment</string>
+    <string name="sample_environment_name_label">Platform type: %1$s</string>
+    <string name="sample_environment_app_id_label">Application id: %1$s</string>
+    <string name="sample_environment_version_label">Version name: %1$s</string>
+    <string name="sample_environment_debug_label">Debug build: %1$s</string>
+
+</resources>

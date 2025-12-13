@@ -21,6 +21,7 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(
     ":app",
+    ":module:feature:sample",
     ":module:library:design",
     ":module:library:environment",
     ":module:library:foundation",

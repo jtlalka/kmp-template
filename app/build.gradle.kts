@@ -11,6 +11,7 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
+            implementation(projects.module.feature.sample)
             implementation(projects.module.library.design)
             implementation(projects.module.library.environment)
             implementation(projects.module.library.foundation)

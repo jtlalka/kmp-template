@@ -1,23 +1,12 @@
 package kmp.template.app
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import kmp.template.environment.Environment
+import kmp.template.design.theme.AppTheme
+import kmp.template.feature.sample.presentation.SampleScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.koin.compose.getKoin
 
 @Preview
 @Composable
-fun App() {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()
-    ) {
-        val environment = getKoin().get<Environment>()
-        Text(text = "KMP Template\n(debug: ${environment.debug})")
-    }
+fun App() = AppTheme {
+    SampleScreen()
 }
