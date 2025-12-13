@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import kmp.template.design.annotation.ComponentPreview
 import kmp.template.design.theme.AppTheme
 import org.jetbrains.compose.resources.painterResource

@@ -39,13 +39,13 @@ object AppTheme {
 fun AppTheme(
     isDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
-) = InternalAppTheme(
+) = AppThemeProvider(
     colors = if (isDarkTheme) darkColorScheme() else lightColorScheme(),
     content = content
 )
 
 @Composable
-private fun InternalAppTheme(
+private fun AppThemeProvider(
     colors: AppColorScheme = AppTheme.colors,
     dimensions: AppDimensions = AppTheme.dimensions,
     icons: AppIcons = AppTheme.icons,
