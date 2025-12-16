@@ -40,10 +40,10 @@ fun AppText(
 @Composable
 private fun AppTextPreview() = AppTheme {
     Column {
-        AppText(text = "Header", style = AppTheme.typography.header)
-        AppText(text = "Sub-header", style = AppTheme.typography.subheader)
-        AppText(text = "Body strong", style = AppTheme.typography.bodyStrong)
-        AppText(text = "Body regular", style = AppTheme.typography.bodyRegular)
+        AppText(text = "Display text", style = AppTheme.typography.display)
+        AppText(text = "Headline text", style = AppTheme.typography.headline)
+        AppText(text = "Title text", style = AppTheme.typography.title)
+        AppText(text = "Body medium", style = AppTheme.typography.bodyMedium)
         AppText(text = "Body small", style = AppTheme.typography.bodySmall)
         AppText(text = "Button text", style = AppTheme.typography.button)
         AppText(text = "Input text", style = AppTheme.typography.input)

@@ -10,9 +10,9 @@ internal val LocalShapes = staticCompositionLocalOf { AppShapes() }
 
 @Immutable
 data class AppShapes(
-    val surface: CornerBasedShape = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp),
-    val dropdown: CornerBasedShape = RoundedCornerShape(8.dp),
-    val card: CornerBasedShape = RoundedCornerShape(8.dp),
-    val button: CornerBasedShape = RoundedCornerShape(8.dp),
-    val input: CornerBasedShape = RoundedCornerShape(8.dp)
+    val surface: CornerBasedShape = RoundedCornerShape(size = 8.dp),
+    val dropdown: CornerBasedShape = RoundedCornerShape(size = 8.dp),
+    val card: CornerBasedShape = RoundedCornerShape(size = 8.dp),
+    val button: CornerBasedShape = RoundedCornerShape(size = 8.dp),
+    val input: CornerBasedShape = RoundedCornerShape(size = 8.dp)
 )

@@ -7,47 +7,48 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DrawerDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.NavigationDrawerItemColors
 import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.PermanentDrawerSheet
 import androidx.compose.material3.PermanentNavigationDrawer
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import kmp.template.design.annotation.ComponentPreview
+import kmp.template.design.component.base.AppIcon
+import kmp.template.design.component.base.AppText
 import kmp.template.design.theme.AppTheme
-import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun AppNavigationDrawer(
-    selectedId: Any,
+    selectedRoute: Any,
     items: List<AppNavigationUiModel>,
-    onClick: (route: Any) -> Unit,
+    onSelected: (Any) -> Unit,
     modifier: Modifier = Modifier,
-    contentPadding: PaddingValues = PaddingValues(
-        horizontal = AppTheme.dimensions.small,
-        vertical = AppTheme.dimensions.medium
-    ),
     containerColor: Color = AppTheme.colors.background,
     contentColor: Color = AppTheme.colors.onBackground,
+    contentPadding: PaddingValues = PaddingValues(
+        horizontal = AppTheme.dimensions.spaceSm,
+        vertical = AppTheme.dimensions.spaceMd
+    ),
     itemColors: NavigationDrawerItemColors = NavigationDrawerItemDefaults.colors(
         selectedContainerColor = AppTheme.colors.primaryContainer,
-        selectedIconColor = AppTheme.colors.onPrimary,
-        selectedTextColor = AppTheme.colors.onPrimary,
-        unselectedContainerColor = Color.Transparent,
-        unselectedIconColor = AppTheme.colors.onPrimary, //onSurfaceVariant
-        unselectedTextColor = AppTheme.colors.onPrimary //onSurfaceVariant
+        selectedIconColor = AppTheme.colors.onPrimaryContainer,
+        selectedTextColor = AppTheme.colors.onPrimaryContainer,
+        unselectedContainerColor = AppTheme.colors.surface,
+        unselectedIconColor = AppTheme.colors.onSurface,
+        unselectedTextColor = AppTheme.colors.onSurface
     ),
     itemShape: Shape = AppTheme.shapes.button,
     tonalElevation: Dp = DrawerDefaults.PermanentDrawerElevation,
-    windowInsets: WindowInsets = DrawerDefaults.windowInsets
+    windowInsets: WindowInsets = DrawerDefaults.windowInsets,
+    content: @Composable () -> Unit = {}
 ) {
     PermanentNavigationDrawer(
+        modifier = modifier,
         drawerContent = {
             PermanentDrawerSheet(
                 drawerContainerColor = containerColor,
@@ -61,19 +62,21 @@ fun AppNavigationDrawer(
             ) {
                 items.forEach { item ->
                     NavigationDrawerItem(
-                        icon = { Icon(painter = painterResource(item.icon), contentDescription = null) },
-                        label = { Text(item.label) },
-                        selected = item.route == selectedId,
-                        onClick = { onClick(item.route) },
-                        modifier = Modifier.padding(horizontal = AppTheme.dimensions.small),
+                        icon = { AppIcon(icon = item.icon) },
+                        label = { AppText(text = item.label) },
+                        selected = item.route == selectedRoute,
+                        onClick = { onSelected(item.route) },
+                        modifier = Modifier.padding(
+                            horizontal = AppTheme.dimensions.spaceSm,
+                            vertical = AppTheme.dimensions.spaceXs
+                        ),
                         colors = itemColors,
                         shape = itemShape
                     )
                 }
             }
         },
-        modifier = modifier,
-        content = {}
+        content = content
     )
 }
 
@@ -81,7 +84,7 @@ fun AppNavigationDrawer(
 @Composable
 private fun AppNavigationDrawerPreview() = AppTheme {
     AppNavigationDrawer(
-        selectedId = "HOME",
+        selectedRoute = "HOME",
         items = listOf(
             AppNavigationUiModel(
                 route = "HOME",
@@ -94,6 +97,6 @@ private fun AppNavigationDrawerPreview() = AppTheme {
                 icon = AppTheme.icons.info
             )
         ),
-        onClick = {}
+        onSelected = {}
     )
 }

@@ -9,11 +9,18 @@ internal val LocalDimensions = staticCompositionLocalOf { AppDimensions() }
 
 @Immutable
 data class AppDimensions(
-    val extraSmall: Dp = 4.dp,
-    val small: Dp = 8.dp,
-    val medium: Dp = 16.dp,
-    val large: Dp = 24.dp,
-    val extraLarge: Dp = 32.dp,
+    val none: Dp = 0.dp,
 
-    val clickable: Dp = 48.dp
+    val spaceXs: Dp = 4.dp,
+    val spaceSm: Dp = 8.dp,
+    val spaceMd: Dp = 16.dp,
+    val spaceLg: Dp = 24.dp,
+    val spaceXl: Dp = 32.dp,
+
+    val componentBorder: Dp = 1.dp,
+
+    val buttonMinSize: Dp = 48.dp,
+    val inputMinHeight: Dp = 48.dp,
+    val progressBarSize: Dp = 4.dp,
+    val progressSpinnerSize: Dp = 64.dp,
 )

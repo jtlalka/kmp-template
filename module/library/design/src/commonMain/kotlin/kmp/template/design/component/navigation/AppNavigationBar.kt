@@ -1,37 +1,37 @@
 package kmp.template.design.component.navigation
 
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemColors
-import androidx.compose.material3.Text
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import kmp.template.design.annotation.ComponentPreview
+import kmp.template.design.component.base.AppIcon
+import kmp.template.design.component.base.AppText
+import kmp.template.design.extension.disableContentAlpha
 import kmp.template.design.theme.AppTheme
-import kmp.template.design.theme.disableContentAlpha
-import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun AppNavigationBar(
-    selectedId: Any,
+    selectedRoute: Any,
     items: List<AppNavigationUiModel>,
-    onClick: (route: Any) -> Unit,
+    onSelected: (Any) -> Unit,
     modifier: Modifier = Modifier,
     containerColor: Color = AppTheme.colors.surface,
     contentColor: Color = AppTheme.colors.onSurface,
-    itemColors: NavigationBarItemColors = NavigationBarItemColors(
-        selectedIconColor = AppTheme.colors.onSurface,
-        selectedTextColor = AppTheme.colors.onSurface,
-        selectedIndicatorColor = AppTheme.colors.primaryContainer,
-        unselectedIconColor = AppTheme.colors.onSurface, //onSurfaceVariant
-        unselectedTextColor = AppTheme.colors.onSurface, //onSurfaceVariant
-        disabledIconColor = AppTheme.colors.onSurface.disableContentAlpha(), //onSurfaceVariant
-        disabledTextColor = AppTheme.colors.onSurface.disableContentAlpha() //onSurfaceVariant
+    itemColors: NavigationBarItemColors = NavigationBarItemDefaults.colors(
+        selectedIconColor = AppTheme.colors.onPrimaryContainer,
+        selectedTextColor = AppTheme.colors.primary,
+        indicatorColor = AppTheme.colors.primaryContainer,
+        unselectedIconColor = AppTheme.colors.onSurfaceVariant,
+        unselectedTextColor = AppTheme.colors.onSurfaceVariant,
+        disabledIconColor = AppTheme.colors.onSurfaceVariant.disableContentAlpha(),
+        disabledTextColor = AppTheme.colors.onSurfaceVariant.disableContentAlpha()
     ),
     tonalElevation: Dp = NavigationBarDefaults.Elevation,
     windowInsets: WindowInsets = NavigationBarDefaults.windowInsets
@@ -45,10 +45,10 @@ fun AppNavigationBar(
     ) {
         items.forEach { item ->
             NavigationBarItem(
-                icon = { Icon(painter = painterResource(item.icon), contentDescription = null) },
-                label = { Text(item.label) },
-                selected = selectedId == item.route,
-                onClick = { onClick(item.route) },
+                icon = { AppIcon(icon = item.icon) },
+                label = { AppText(text = item.label) },
+                selected = item.route == selectedRoute,
+                onClick = { onSelected(item.route) },
                 colors = itemColors
             )
         }
@@ -59,7 +59,7 @@ fun AppNavigationBar(
 @Composable
 private fun AppNavigationBarPreview() = AppTheme {
     AppNavigationBar(
-        selectedId = "HOME",
+        selectedRoute = "HOME",
         items = listOf(
             AppNavigationUiModel(
                 route = "HOME",
@@ -72,6 +72,6 @@ private fun AppNavigationBarPreview() = AppTheme {
                 icon = AppTheme.icons.info
             )
         ),
-        onClick = {}
+        onSelected = {}
     )
 }

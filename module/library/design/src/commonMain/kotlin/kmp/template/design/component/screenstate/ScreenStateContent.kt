@@ -1,24 +1,26 @@
 package kmp.template.design.component.screenstate
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement.spacedBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import kmp.template.design.annotation.ScreenPreview
-import kmp.template.design.component.base.AppButton
+import kmp.template.design.component.base.AppFilledButton
 import kmp.template.design.component.base.AppIcon
+import kmp.template.design.component.base.AppItemSpacer
+import kmp.template.design.component.base.AppOutlinedButton
 import kmp.template.design.component.base.AppProgressSpinner
+import kmp.template.design.component.base.AppSectionSpacer
 import kmp.template.design.component.base.AppText
-import kmp.template.design.component.base.ButtonType
 import kmp.template.design.component.screenstate.ScreenStateUiModel.ErrorState
 import kmp.template.design.component.screenstate.ScreenStateUiModel.Loading
 import kmp.template.design.component.screenstate.ScreenStateUiModel.SuccessState
@@ -35,6 +37,7 @@ fun ScreenStateContent(
     onOutlineButtonClick: () -> Unit = {}
 ) = AnimatedContent(
     targetState = screenState,
+    transitionSpec = { fadeIn() togetherWith fadeOut() },
     modifier = modifier
 ) { state ->
     when (state) {
@@ -89,7 +92,7 @@ private fun LoadingScreenState(
     onOutlineButtonClick = onOutlineButtonClick
 ) {
     AppProgressSpinner(
-        modifier = Modifier.size(64.dp)
+        modifier = Modifier.size(size = AppTheme.dimensions.progressSpinnerSize)
     )
 }
 
@@ -114,7 +117,7 @@ private fun SuccessScreenState(
 ) {
     AppIcon(
         icon = customIcon ?: AppTheme.icons.check,
-        modifier = Modifier.size(64.dp)
+        modifier = Modifier.size(size = AppTheme.dimensions.progressSpinnerSize)
     )
 }
 
@@ -140,7 +143,7 @@ private fun ErrorScreenState(
     AppIcon(
         icon = customIcon ?: AppTheme.icons.error,
         tint = AppTheme.colors.error,
-        modifier = Modifier.size(64.dp)
+        modifier = Modifier.size(size = AppTheme.dimensions.progressSpinnerSize)
     )
 }
 
@@ -160,36 +163,37 @@ private fun ScreenStateCommonContent(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = spacedBy(AppTheme.dimensions.small)
+        verticalArrangement = spacedBy(AppTheme.dimensions.spaceSm)
     ) {
         customContent()
 
-        Spacer(modifier = Modifier.height(AppTheme.dimensions.medium))
+        if (header.isNotEmpty() || message.isNotEmpty()) {
+            AppItemSpacer()
+        }
         if (header.isNotEmpty()) {
             AppText(
                 text = header,
-                style = AppTheme.typography.header
+                style = AppTheme.typography.display
             )
         }
         if (message.isNotEmpty()) {
             AppText(
                 text = message,
-                style = AppTheme.typography.bodyRegular
+                style = AppTheme.typography.bodyMedium
             )
         }
-
-        Spacer(modifier = Modifier.height(AppTheme.dimensions.large))
+        if (filledButtonText.isNotEmpty() || outlineButtonText.isNotEmpty()) {
+            AppSectionSpacer()
+        }
         if (filledButtonText.isNotEmpty()) {
-            AppButton(
+            AppFilledButton(
                 label = filledButtonText,
-                type = ButtonType.Filled,
                 onClick = onFilledButtonClick
             )
         }
         if (outlineButtonText.isNotEmpty()) {
-            AppButton(
+            AppOutlinedButton(
                 label = outlineButtonText,
-                type = ButtonType.Outlined,
                 onClick = onOutlineButtonClick
             )
         }
