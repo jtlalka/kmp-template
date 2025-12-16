@@ -1,7 +1,7 @@
 package kmp.template.design.component.base
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.runtime.Composable
@@ -10,22 +10,45 @@ import androidx.compose.ui.graphics.Color
 import kmp.template.design.annotation.ComponentPreview
 import kmp.template.design.theme.AppTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppProgressBar(
     modifier: Modifier = Modifier,
-    color: Color = AppTheme.colors.secondary,
-    trackColor: Color = AppTheme.colors.surfaceContainer,
+    color: Color = AppTheme.colors.primary,
+    trackColor: Color = AppTheme.colors.secondaryContainer
 ) = LinearProgressIndicator(
-    modifier = modifier,
+    modifier = modifier.fillMaxWidth(),
     color = color,
     trackColor = trackColor,
     strokeCap = ProgressIndicatorDefaults.LinearStrokeCap,
-    gapSize = ProgressIndicatorDefaults.LinearIndicatorTrackGapSize
+    gapSize = AppTheme.dimensions.progressBarSize
+)
+
+@Composable
+fun AppProgressBar(
+    progress: Float,
+    modifier: Modifier = Modifier,
+    color: Color = AppTheme.colors.primary,
+    trackColor: Color = AppTheme.colors.secondaryContainer
+) = LinearProgressIndicator(
+    modifier = modifier.fillMaxWidth(),
+    progress = { progress },
+    color = color,
+    trackColor = trackColor,
+    strokeCap = ProgressIndicatorDefaults.LinearStrokeCap,
+    gapSize = AppTheme.dimensions.none,
+    drawStopIndicator = {}
 )
 
 @ComponentPreview
 @Composable
 private fun AppProgressBarPreview() = AppTheme {
-    AppProgressBar(modifier = Modifier.fillMaxWidth())
+    Column {
+        AppProgressBar()
+        AppItemSpacer()
+        AppProgressBar(progress = 0.1f)
+        AppItemSpacer()
+        AppProgressBar(progress = 0.5f)
+        AppItemSpacer()
+        AppProgressBar(progress = 1.0f)
+    }
 }

@@ -46,7 +46,7 @@ fun AppTheme(
 
 @Composable
 private fun AppThemeProvider(
-    colors: AppColorScheme = AppTheme.colors,
+    colors: AppColorScheme,
     dimensions: AppDimensions = AppTheme.dimensions,
     icons: AppIcons = AppTheme.icons,
     shapes: AppShapes = AppTheme.shapes,
@@ -60,11 +60,11 @@ private fun AppThemeProvider(
     LocalTypography provides typography
 ) {
     Surface(
-        color = AppTheme.colors.background,
-        contentColor = AppTheme.colors.onBackground
+        color = colors.background,
+        contentColor = colors.onBackground
     ) {
         ProvideTextStyle(
-            value = typography.bodyRegular,
+            value = typography.bodyMedium,
             content = content
         )
     }

@@ -9,60 +9,75 @@ internal val LocalColors = staticCompositionLocalOf { lightColorScheme() }
 @Immutable
 data class AppColorScheme(
     val primary: Color,
-    val primaryVariant: Color,
-    val primaryContainer: Color,
-    val secondary: Color,
-    val secondaryVariant: Color,
-    val secondaryContainer: Color,
-    val background: Color,
-    val surface: Color,
-    val surfaceVariant: Color,
-    val surfaceContainer: Color,
-    val error: Color,
     val onPrimary: Color,
+    val primaryContainer: Color,
+    val onPrimaryContainer: Color,
+
+    val secondary: Color,
     val onSecondary: Color,
+    val secondaryContainer: Color,
+    val onSecondaryContainer: Color,
+
+    val background: Color,
     val onBackground: Color,
+
+    val surface: Color,
     val onSurface: Color,
+    val surfaceVariant: Color,
+    val onSurfaceVariant: Color,
+
+    val error: Color,
     val onError: Color,
-    val isDarkMode: Boolean
+    val errorContainer: Color,
+    val onErrorContainer: Color
 )
 
 internal fun lightColorScheme() = AppColorScheme(
-    primary = AppColorPalette.tealLight,
-    primaryVariant = AppColorPalette.tealLight.colorVariantAlpha(),
-    primaryContainer = AppColorPalette.tealLight.colorContainerAlpha(),
-    secondary = AppColorPalette.violetLight,
-    secondaryVariant = AppColorPalette.violetLight.colorVariantAlpha(),
-    secondaryContainer = AppColorPalette.violetLight.colorContainerAlpha(),
-    background = AppColorPalette.white,
-    surface = AppColorPalette.grayLight,
-    surfaceVariant = AppColorPalette.grayLight.colorVariantAlpha(),
-    surfaceContainer = AppColorPalette.grayLight.colorContainerAlpha(),
-    error = AppColorPalette.redLight,
-    onPrimary = AppColorPalette.black,
-    onSecondary = AppColorPalette.white,
-    onBackground = AppColorPalette.black,
-    onSurface = AppColorPalette.black,
-    onError = AppColorPalette.white,
-    isDarkMode = false
+    primary = AppColorPalette.primary40,
+    onPrimary = AppColorPalette.primary100,
+    primaryContainer = AppColorPalette.primary90,
+    onPrimaryContainer = AppColorPalette.primary10,
+
+    secondary = AppColorPalette.secondary40,
+    onSecondary = AppColorPalette.secondary100,
+    secondaryContainer = AppColorPalette.secondary90,
+    onSecondaryContainer = AppColorPalette.secondary10,
+
+    background = AppColorPalette.neutral99,
+    onBackground = AppColorPalette.neutral10,
+
+    surface = AppColorPalette.neutral95,
+    onSurface = AppColorPalette.neutral10,
+    surfaceVariant = AppColorPalette.neutral90,
+    onSurfaceVariant = AppColorPalette.neutral30,
+
+    error = AppColorPalette.error40,
+    onError = AppColorPalette.error100,
+    errorContainer = AppColorPalette.error90,
+    onErrorContainer = AppColorPalette.error10
 )
 
 internal fun darkColorScheme() = AppColorScheme(
-    primary = AppColorPalette.tealDark,
-    primaryVariant = AppColorPalette.tealDark.colorVariantAlpha(),
-    primaryContainer = AppColorPalette.tealDark.colorContainerAlpha(),
-    secondary = AppColorPalette.violetDark,
-    secondaryVariant = AppColorPalette.violetDark.colorVariantAlpha(),
-    secondaryContainer = AppColorPalette.violetDark.colorContainerAlpha(),
-    background = AppColorPalette.black,
-    surface = AppColorPalette.grayDark,
-    surfaceVariant = AppColorPalette.grayDark.colorVariantAlpha(),
-    surfaceContainer = AppColorPalette.grayDark.colorContainerAlpha(),
-    error = AppColorPalette.redDark,
-    onPrimary = AppColorPalette.white,
-    onSecondary = AppColorPalette.white,
-    onBackground = AppColorPalette.white,
-    onSurface = AppColorPalette.white,
-    onError = AppColorPalette.white,
-    isDarkMode = true
+    primary = AppColorPalette.primary80,
+    onPrimary = AppColorPalette.primary20,
+    primaryContainer = AppColorPalette.primary30,
+    onPrimaryContainer = AppColorPalette.primary90,
+
+    secondary = AppColorPalette.secondary80,
+    onSecondary = AppColorPalette.secondary20,
+    secondaryContainer = AppColorPalette.secondary30,
+    onSecondaryContainer = AppColorPalette.secondary90,
+
+    background = AppColorPalette.neutral10,
+    onBackground = AppColorPalette.neutral90,
+
+    surface = AppColorPalette.neutral20,
+    onSurface = AppColorPalette.neutral90,
+    surfaceVariant = AppColorPalette.neutral30,
+    onSurfaceVariant = AppColorPalette.neutral80,
+
+    error = AppColorPalette.error80,
+    onError = AppColorPalette.error20,
+    errorContainer = AppColorPalette.error30,
+    onErrorContainer = AppColorPalette.error90
 )
