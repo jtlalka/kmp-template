@@ -55,6 +55,11 @@ private fun AppTopCenterBarPreview() = AppTheme {
             IconButton(onClick = { }) {
                 AppIcon(icon = AppTheme.icons.arrowBack)
             }
+        },
+        actions = {
+            IconButton(onClick = { }) {
+                AppIcon(icon = AppTheme.icons.accountCircle)
+            }
         }
     )
 }

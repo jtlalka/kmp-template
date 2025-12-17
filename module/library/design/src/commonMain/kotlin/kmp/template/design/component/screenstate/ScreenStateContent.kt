@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import kmp.template.design.annotation.ScreenPreview
 import kmp.template.design.component.base.AppFilledButton
 import kmp.template.design.component.base.AppIcon
@@ -25,14 +26,13 @@ import kmp.template.design.component.screenstate.ScreenStateUiModel.ErrorState
 import kmp.template.design.component.screenstate.ScreenStateUiModel.Loading
 import kmp.template.design.component.screenstate.ScreenStateUiModel.SuccessState
 import kmp.template.design.theme.AppTheme
-import org.jetbrains.compose.resources.DrawableResource
 
 @Composable
 fun ScreenStateContent(
     screenState: ScreenStateUiModel,
     modifier: Modifier = Modifier,
-    successCustomIcon: DrawableResource? = null,
-    errorCustomIcon: DrawableResource? = null,
+    successCustomIcon: ImageVector? = null,
+    errorCustomIcon: ImageVector? = null,
     onFilledButtonClick: () -> Unit = {},
     onOutlineButtonClick: () -> Unit = {}
 ) = AnimatedContent(
@@ -100,7 +100,7 @@ private fun LoadingScreenState(
 private fun SuccessScreenState(
     header: String,
     message: String,
-    customIcon: DrawableResource?,
+    customIcon: ImageVector?,
     filledButtonText: String,
     outlineButtonText: String,
     onFilledButtonClick: () -> Unit,
@@ -116,7 +116,7 @@ private fun SuccessScreenState(
     onOutlineButtonClick = onOutlineButtonClick
 ) {
     AppIcon(
-        icon = customIcon ?: AppTheme.icons.check,
+        icon = customIcon ?: AppTheme.icons.checkCircle,
         modifier = Modifier.size(size = AppTheme.dimensions.progressSpinnerSize)
     )
 }
@@ -125,7 +125,7 @@ private fun SuccessScreenState(
 private fun ErrorScreenState(
     header: String,
     message: String,
-    customIcon: DrawableResource?,
+    customIcon: ImageVector?,
     filledButtonText: String,
     outlineButtonText: String,
     onFilledButtonClick: () -> Unit,
@@ -141,7 +141,7 @@ private fun ErrorScreenState(
     onOutlineButtonClick = onOutlineButtonClick
 ) {
     AppIcon(
-        icon = customIcon ?: AppTheme.icons.error,
+        icon = customIcon ?: AppTheme.icons.errorCircle,
         tint = AppTheme.colors.error,
         modifier = Modifier.size(size = AppTheme.dimensions.progressSpinnerSize)
     )

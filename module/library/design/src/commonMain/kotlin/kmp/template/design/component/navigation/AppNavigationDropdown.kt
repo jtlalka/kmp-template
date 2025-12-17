@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.DpOffset
 import kmp.template.design.annotation.ComponentPreview
 import kmp.template.design.component.base.AppIcon
+import kmp.template.design.component.base.AppScaffold
 import kmp.template.design.component.base.AppText
 import kmp.template.design.extension.disableContentAlpha
 import kmp.template.design.theme.AppTheme
@@ -67,21 +68,23 @@ fun AppNavigationDropdown(
 @ComponentPreview
 @Composable
 private fun AppNavigationDropdownPreview() = AppTheme {
-    AppNavigationDropdown(
-        expanded = true,
-        items = listOf(
-            AppNavigationUiModel(
-                route = "HOME",
-                label = "Home",
-                icon = AppTheme.icons.home
+    AppScaffold {
+        AppNavigationDropdown(
+            expanded = true,
+            items = listOf(
+                AppNavigationUiModel(
+                    route = "HOME",
+                    label = "Home",
+                    icon = AppTheme.icons.home
+                ),
+                AppNavigationUiModel(
+                    route = "ABOUT",
+                    label = "About",
+                    icon = AppTheme.icons.infoCircle
+                )
             ),
-            AppNavigationUiModel(
-                route = "ABOUT",
-                label = "About",
-                icon = AppTheme.icons.info
-            )
-        ),
-        onSelected = {},
-        onDismiss = {}
-    )
+            onSelected = {},
+            onDismiss = {}
+        )
+    }
 }

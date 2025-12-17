@@ -94,7 +94,7 @@ private fun AppNavigationDrawerPreview() = AppTheme {
             AppNavigationUiModel(
                 route = "ABOUT",
                 label = "About",
-                icon = AppTheme.icons.info
+                icon = AppTheme.icons.infoCircle
             )
         ),
         onSelected = {}

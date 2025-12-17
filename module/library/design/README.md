@@ -41,3 +41,10 @@ Colors shema use specific color contrast from colors palette.
 | errorContainer     |    90 / 10    |   30 / 90    |
 
 (*) surface used dedicated background contrast instead of alpha/elevation.
+
+### Material Icons
+
+Open-source icons galleries are available on web pages:
+
+- [Official Google fonts - Material symbols](https://fonts.google.com/icons)
+- [Composables project - Material symbols](https://composables.com/icons/icon-libraries/material-symbols/rounded)

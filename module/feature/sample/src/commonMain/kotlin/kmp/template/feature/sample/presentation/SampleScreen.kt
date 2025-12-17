@@ -1,5 +1,6 @@
 package kmp.template.feature.sample.presentation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,12 +19,15 @@ import kmp.template.design.component.base.AppDisplayTextStyle
 import kmp.template.design.component.base.AppDivider
 import kmp.template.design.component.base.AppFilledButton
 import kmp.template.design.component.base.AppFilledIconButton
+import kmp.template.design.component.base.AppIcon
+import kmp.template.design.component.base.AppItemSpacer
 import kmp.template.design.component.base.AppOutlinedButton
 import kmp.template.design.component.base.AppOutlinedIconButton
 import kmp.template.design.component.base.AppOutlinedInput
 import kmp.template.design.component.base.AppProgressBar
 import kmp.template.design.component.base.AppProgressSpinner
 import kmp.template.design.component.base.AppScaffold
+import kmp.template.design.component.base.AppSectionSpacer
 import kmp.template.design.component.base.AppText
 import kmp.template.design.component.base.AppTitleTextStyle
 import kmp.template.design.theme.AppTheme
@@ -113,6 +117,27 @@ internal fun SampleScreen(
             itemPadding = AppTheme.dimensions.spaceMd
         ) {
             AppDisplayTextStyle {
+                AppText(text = "Icons")
+                AppDivider()
+            }
+            AppButtonRow {
+                AppIcon(icon = AppTheme.icons.home)
+                AppIcon(icon = AppTheme.icons.arrowForward)
+                AppIcon(icon = AppTheme.icons.arrowBack)
+                AppIcon(icon = AppTheme.icons.expandMore)
+                AppIcon(icon = AppTheme.icons.expandLess)
+                AppIcon(icon = AppTheme.icons.accountCircle)
+                AppIcon(icon = AppTheme.icons.infoCircle)
+                AppIcon(icon = AppTheme.icons.checkCircle)
+                AppIcon(icon = AppTheme.icons.errorCircle)
+            }
+        }
+
+        AppCard(
+            modifier = Modifier.fillMaxWidth(),
+            itemPadding = AppTheme.dimensions.spaceMd
+        ) {
+            AppDisplayTextStyle {
                 AppText(text = "Buttons")
                 AppDivider()
             }
@@ -127,7 +152,7 @@ internal fun SampleScreen(
                     onClick = {}
                 )
                 AppFilledIconButton(
-                    icon = AppTheme.icons.arrowBack,
+                    icon = AppTheme.icons.accountCircle,
                     onClick = {}
                 )
             }
@@ -142,7 +167,7 @@ internal fun SampleScreen(
                     onClick = {}
                 )
                 AppOutlinedIconButton(
-                    icon = AppTheme.icons.arrowBack,
+                    icon = AppTheme.icons.accountCircle,
                     onClick = {}
                 )
             }
@@ -197,6 +222,21 @@ internal fun SampleScreen(
                 AppProgressSpinner(progress = 0.25f)
                 AppProgressSpinner(progress = 0.50f)
                 AppProgressSpinner(progress = 1.00f)
+            }
+        }
+
+        AppCard(
+            modifier = Modifier.fillMaxWidth(),
+            itemPadding = AppTheme.dimensions.spaceMd
+        ) {
+            AppDisplayTextStyle {
+                AppText(text = "Spacers")
+                AppDivider()
+            }
+            AppButtonRow {
+                AppSectionSpacer(modifier = Modifier.background(AppTheme.colors.primary))
+                AppComponentSpacer(modifier = Modifier.background(AppTheme.colors.secondary))
+                AppItemSpacer(modifier = Modifier.background(AppTheme.colors.error))
             }
         }
     }
