@@ -15,13 +15,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import kmp.template.design.annotation.ComponentPreview
 import kmp.template.design.extension.disableContainerAlpha
 import kmp.template.design.extension.disableContentAlpha
 import kmp.template.design.theme.AppTheme
-import org.jetbrains.compose.resources.DrawableResource
 
 @Composable
 fun AppFilledButton(
@@ -63,7 +63,7 @@ fun AppOutlinedButton(
 
 @Composable
 fun AppFilledIconButton(
-    icon: DrawableResource,
+    icon: ImageVector,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     contentDescription: String? = null,
@@ -85,7 +85,7 @@ fun AppFilledIconButton(
 
 @Composable
 fun AppOutlinedIconButton(
-    icon: DrawableResource,
+    icon: ImageVector,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     contentDescription: String? = null,
@@ -217,7 +217,7 @@ private fun AppButtonPreview() = AppTheme {
                 onClick = {}
             )
             AppFilledIconButton(
-                icon = AppTheme.icons.arrowBack,
+                icon = AppTheme.icons.expandLess,
                 onClick = {}
             )
         }
@@ -232,7 +232,7 @@ private fun AppButtonPreview() = AppTheme {
                 onClick = {}
             )
             AppOutlinedIconButton(
-                icon = AppTheme.icons.arrowBack,
+                icon = AppTheme.icons.expandMore,
                 onClick = {}
             )
         }
