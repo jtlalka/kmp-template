@@ -1,6 +1,5 @@
 package kmp.template.feature.sample.presentation
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,22 +11,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kmp.template.design.annotation.ScreenPreview
-import kmp.template.design.component.base.AppButtonRow
 import kmp.template.design.component.base.AppCard
 import kmp.template.design.component.base.AppComponentSpacer
-import kmp.template.design.component.base.AppDisplayTextStyle
-import kmp.template.design.component.base.AppDivider
 import kmp.template.design.component.base.AppFilledButton
-import kmp.template.design.component.base.AppFilledIconButton
-import kmp.template.design.component.base.AppIcon
-import kmp.template.design.component.base.AppItemSpacer
-import kmp.template.design.component.base.AppOutlinedButton
-import kmp.template.design.component.base.AppOutlinedIconButton
-import kmp.template.design.component.base.AppOutlinedInput
-import kmp.template.design.component.base.AppProgressBar
-import kmp.template.design.component.base.AppProgressSpinner
 import kmp.template.design.component.base.AppScaffold
-import kmp.template.design.component.base.AppSectionSpacer
 import kmp.template.design.component.base.AppText
 import kmp.template.design.component.base.AppTitleTextStyle
 import kmp.template.design.theme.AppTheme
@@ -85,159 +72,6 @@ internal fun SampleScreen(
                 label = stringResource(Res.string.sample_environment_screen_header),
                 onClick = { intent(EnvironmentPressed) }
             )
-        }
-
-        AppCard(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            AppDisplayTextStyle {
-                AppText(text = "Basic Design System")
-            }
-        }
-
-        AppCard(
-            modifier = Modifier.fillMaxWidth(),
-            itemPadding = AppTheme.dimensions.spaceMd
-        ) {
-            AppDisplayTextStyle {
-                AppText(text = "Fonts")
-                AppDivider()
-            }
-            AppText(text = "Text format: display", style = AppTheme.typography.display)
-            AppText(text = "Text format: headline", style = AppTheme.typography.headline)
-            AppText(text = "Text format: title", style = AppTheme.typography.title)
-            AppText(text = "Text format: body medium", style = AppTheme.typography.bodyMedium)
-            AppText(text = "Text format: body small", style = AppTheme.typography.bodySmall)
-            AppText(text = "Text format: button", style = AppTheme.typography.button)
-            AppText(text = "Text format: input", style = AppTheme.typography.input)
-        }
-
-        AppCard(
-            modifier = Modifier.fillMaxWidth(),
-            itemPadding = AppTheme.dimensions.spaceMd
-        ) {
-            AppDisplayTextStyle {
-                AppText(text = "Icons")
-                AppDivider()
-            }
-            AppButtonRow {
-                AppIcon(icon = AppTheme.icons.home)
-                AppIcon(icon = AppTheme.icons.arrowForward)
-                AppIcon(icon = AppTheme.icons.arrowBack)
-                AppIcon(icon = AppTheme.icons.expandMore)
-                AppIcon(icon = AppTheme.icons.expandLess)
-                AppIcon(icon = AppTheme.icons.accountCircle)
-                AppIcon(icon = AppTheme.icons.infoCircle)
-                AppIcon(icon = AppTheme.icons.checkCircle)
-                AppIcon(icon = AppTheme.icons.errorCircle)
-            }
-        }
-
-        AppCard(
-            modifier = Modifier.fillMaxWidth(),
-            itemPadding = AppTheme.dimensions.spaceMd
-        ) {
-            AppDisplayTextStyle {
-                AppText(text = "Buttons")
-                AppDivider()
-            }
-            AppButtonRow {
-                AppFilledButton(
-                    label = "Button",
-                    onClick = {}
-                )
-                AppFilledButton(
-                    label = "Button",
-                    enabled = false,
-                    onClick = {}
-                )
-                AppFilledIconButton(
-                    icon = AppTheme.icons.accountCircle,
-                    onClick = {}
-                )
-            }
-            AppButtonRow {
-                AppOutlinedButton(
-                    label = "Button",
-                    onClick = {}
-                )
-                AppOutlinedButton(
-                    label = "Button",
-                    enabled = false,
-                    onClick = {}
-                )
-                AppOutlinedIconButton(
-                    icon = AppTheme.icons.accountCircle,
-                    onClick = {}
-                )
-            }
-        }
-
-        AppCard(
-            modifier = Modifier.fillMaxWidth(),
-            itemPadding = AppTheme.dimensions.spaceMd
-        ) {
-            AppDisplayTextStyle {
-                AppText(text = "Inputs")
-                AppDivider()
-            }
-            AppOutlinedInput(
-                label = "Empty input",
-                value = "",
-                onValueChange = {}
-            )
-            AppOutlinedInput(
-                label = "Fulfill input",
-                value = "600 500 400",
-                onValueChange = {},
-                prefix = { AppText(text = "+48") },
-                suffix = { AppText(text = "PL") },
-            )
-            AppOutlinedInput(
-                label = "Disabled input",
-                value = "",
-                enabled = false,
-                onValueChange = {}
-            )
-        }
-
-        AppCard(
-            modifier = Modifier.fillMaxWidth(),
-            itemPadding = AppTheme.dimensions.spaceMd
-        ) {
-            AppDisplayTextStyle {
-                AppText(text = "Progress")
-                AppDivider()
-            }
-
-            AppProgressBar()
-            AppProgressBar(progress = 0.00f)
-            AppProgressBar(progress = 0.25f)
-            AppProgressBar(progress = 0.50f)
-            AppProgressBar(progress = 1.00f)
-
-            AppButtonRow {
-                AppProgressSpinner()
-                AppProgressSpinner(progress = 0.00f)
-                AppProgressSpinner(progress = 0.25f)
-                AppProgressSpinner(progress = 0.50f)
-                AppProgressSpinner(progress = 1.00f)
-            }
-        }
-
-        AppCard(
-            modifier = Modifier.fillMaxWidth(),
-            itemPadding = AppTheme.dimensions.spaceMd
-        ) {
-            AppDisplayTextStyle {
-                AppText(text = "Spacers")
-                AppDivider()
-            }
-            AppButtonRow {
-                AppSectionSpacer(modifier = Modifier.background(AppTheme.colors.primary))
-                AppComponentSpacer(modifier = Modifier.background(AppTheme.colors.secondary))
-                AppItemSpacer(modifier = Modifier.background(AppTheme.colors.error))
-            }
         }
     }
 }
