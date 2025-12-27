@@ -39,25 +39,34 @@ import kmp.template.design.component.screenstate.ScreenStateContent
 import kmp.template.design.component.screenstate.ScreenStateUiModel
 import kmp.template.design.component.topbar.AppTopCenterBar
 import kmp.template.design.theme.AppTheme
+import kmp.template.feature.sample.presentation.design.SampleDesignIntent.NavigateBackPressed
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun SampleDesignScreen() {
+internal fun SampleDesignScreen() {
     val viewModel: SampleDesignViewModel = koinViewModel()
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 
     SampleDesignScreen(
-        viewState = viewState
+        viewState = viewState,
+        intent = viewModel::processIntent
     )
 }
 
 @Composable
-internal fun SampleDesignScreen(
-    viewState: SampleDesignViewState
+private fun SampleDesignScreen(
+    viewState: SampleDesignViewState,
+    intent: (SampleDesignIntent) -> Unit
 ) = AppScaffold(
-    topBar = { SampleDesignAppBar() },
+    topBar = {
+        SampleDesignTopBar(
+            intent = intent
+        )
+    },
     content = { contentPadding ->
-        SampleDesignContent(contentPadding)
+        SampleDesignContent(
+            contentPadding = contentPadding
+        )
         ScreenStateContent(
             screenState = viewState.screenState,
             modifier = Modifier.fillMaxSize()
@@ -67,13 +76,14 @@ internal fun SampleDesignScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SampleDesignAppBar(
+private fun SampleDesignTopBar(
+    intent: (SampleDesignIntent) -> Unit
 ) = AppTopCenterBar(
     title = {
         AppText(text = "Sample Design System")
     },
     navigationIcon = {
-        IconButton(onClick = { }) {
+        IconButton(onClick = { intent(NavigateBackPressed) }) {
             AppIcon(icon = AppTheme.icons.arrowBack)
         }
     }
@@ -82,24 +92,22 @@ private fun SampleDesignAppBar(
 @Composable
 private fun SampleDesignContent(
     contentPadding: PaddingValues
+) = Column(
+    verticalArrangement = Arrangement.spacedBy(AppTheme.dimensions.spaceMd),
+    modifier = Modifier
+        .padding(contentPadding)
+        .verticalScroll(state = rememberScrollState())
+        .padding(
+            horizontal = AppTheme.dimensions.spaceMd,
+            vertical = AppTheme.dimensions.spaceSm
+        )
 ) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(AppTheme.dimensions.spaceMd),
-        modifier = Modifier
-            .padding(contentPadding)
-            .verticalScroll(state = rememberScrollState())
-            .padding(
-                horizontal = AppTheme.dimensions.spaceMd,
-                vertical = AppTheme.dimensions.spaceSm
-            )
-    ) {
-        SampleDesignTypography()
-        SampleDesignIcons()
-        SampleDesignButtons()
-        SampleDesignInputs()
-        SampleDesignProgress()
-        SampleDesignSpacers()
-    }
+    SampleDesignTypography()
+    SampleDesignIcons()
+    SampleDesignButtons()
+    SampleDesignInputs()
+    SampleDesignProgress()
+    SampleDesignSpacers()
 }
 
 @Composable
@@ -239,10 +247,11 @@ private fun SampleDesignCardItem(
 
 @ScreenPreview
 @Composable
-private fun SampleDesignScreenPreview() = AppTheme {
+private fun ScreenPreview() = AppTheme {
     SampleDesignScreen(
         viewState = SampleDesignViewState(
             screenState = ScreenStateUiModel.Content
-        )
+        ),
+        intent = {}
     )
 }
