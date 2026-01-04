@@ -25,5 +25,6 @@ include(
     ":module:library:design",
     ":module:library:environment",
     ":module:library:foundation",
+    ":module:library:navigation",
     ":module:library:network"
 )

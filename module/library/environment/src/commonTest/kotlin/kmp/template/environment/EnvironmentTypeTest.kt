@@ -7,7 +7,7 @@ import kotlin.test.assertEquals
 class EnvironmentTypeTest {
 
     @Test
-    fun `returns enum contains in expected order when entries is called`() {
+    fun `returns enum values in expected order when entries is called`() {
         val result = EnvironmentType.entries
 
         assertContentEquals(

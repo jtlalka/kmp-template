@@ -6,18 +6,19 @@ import kotlin.test.assertEquals
 class NoOpEnvironmentTest {
 
     @Test
-    fun `returns defaults values when not overridden`() {
-        val given = NoOpEnvironment(type = EnvironmentType.JVM)
+    fun `returns default values when not overwritten`() {
+        val result = NoOpEnvironment(type = EnvironmentType.JVM)
 
-        assertEquals("application", given.applicationId)
-        assertEquals("1.0.0", given.versionName)
-        assertEquals("1", given.versionCode)
-        assertEquals(false, given.debug)
+        assertEquals(EnvironmentType.JVM, result.type)
+        assertEquals("application", result.applicationId)
+        assertEquals("1.0.0", result.versionName)
+        assertEquals("1", result.versionCode)
+        assertEquals(false, result.debug)
     }
 
     @Test
     fun `returns custom values when values are provided`() {
-        val given = NoOpEnvironment(
+        val result = NoOpEnvironment(
             type = EnvironmentType.WEB,
             applicationId = "web.app",
             versionName = "2.3.4",
@@ -25,10 +26,10 @@ class NoOpEnvironmentTest {
             debug = true
         )
 
-        assertEquals(EnvironmentType.WEB, given.type)
-        assertEquals("web.app", given.applicationId)
-        assertEquals("2.3.4", given.versionName)
-        assertEquals("42", given.versionCode)
-        assertEquals(true, given.debug)
+        assertEquals(EnvironmentType.WEB, result.type)
+        assertEquals("web.app", result.applicationId)
+        assertEquals("2.3.4", result.versionName)
+        assertEquals("42", result.versionCode)
+        assertEquals(true, result.debug)
     }
 }

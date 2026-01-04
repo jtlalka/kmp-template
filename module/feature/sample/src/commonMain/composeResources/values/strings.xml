@@ -1,10 +1,30 @@
 <resources>
-    <string name="sample_screen_header">Kotlin Multiplatform Project</string>
+    <string name="sample_navigation_bar_home">Home</string>
+    <string name="sample_navigation_bar_about">About</string>
+
+    <string name="sample_home_screen_header">KMP Template</string>
+    <string name="sample_home_card_header">Features</string>
+    <string name="sample_home_card_design_label">Design System</string>
+    <string name="sample_home_card_environment_label">Environment</string>
+
+    <string name="sample_design_screen_header">Sample Design System</string>
+    <string name="sample_design_fonts_card_header">Fonts</string>
+    <string name="sample_design_icons_card_header">Icons</string>
+    <string name="sample_design_buttons_card_header">Buttons</string>
+    <string name="sample_design_inputs_card_header">Inputs</string>
+    <string name="sample_design_progress_card_header">Progress</string>
+    <string name="sample_design_spacers_card_header">Spacers</string>
 
     <string name="sample_environment_screen_header">Environment</string>
+    <string name="sample_environment_card_header">Platform Information</string>
     <string name="sample_environment_name_label">Platform type: %1$s</string>
     <string name="sample_environment_app_id_label">Application id: %1$s</string>
     <string name="sample_environment_version_label">Version name: %1$s</string>
     <string name="sample_environment_debug_label">Debug build: %1$s</string>
+
+    <string name="sample_about_screen_header">About Template</string>
+    <string name="sample_about_card_header">KMP Project</string>
+    <string name="sample_about_card_info_message">Kotlin multiplatform template with gradle multimodule architecture.</string>
+    <string name="sample_about_card_support_message">Supported targets:</string>
 
 </resources>
