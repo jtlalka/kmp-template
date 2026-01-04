@@ -55,7 +55,7 @@ fun AppNavigationDropdown(
             leadingIcon = { AppIcon(icon = item.icon) },
             trailingIcon = null,
             onClick = {
-                onSelected(item.route)
+                onSelected(item.id)
                 onDismiss()
             },
             enabled = true,
@@ -73,12 +73,12 @@ private fun AppNavigationDropdownPreview() = AppTheme {
             expanded = true,
             items = listOf(
                 AppNavigationUiModel(
-                    route = "HOME",
+                    id = "HOME",
                     label = "Home",
                     icon = AppTheme.icons.home
                 ),
                 AppNavigationUiModel(
-                    route = "ABOUT",
+                    id = "ABOUT",
                     label = "About",
                     icon = AppTheme.icons.infoCircle
                 )

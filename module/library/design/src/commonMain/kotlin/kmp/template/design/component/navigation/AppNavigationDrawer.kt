@@ -24,7 +24,7 @@ import kmp.template.design.theme.AppTheme
 
 @Composable
 fun AppNavigationDrawer(
-    selectedRoute: Any,
+    selectedId: Any,
     items: List<AppNavigationUiModel>,
     onSelected: (Any) -> Unit,
     modifier: Modifier = Modifier,
@@ -64,8 +64,8 @@ fun AppNavigationDrawer(
                     NavigationDrawerItem(
                         icon = { AppIcon(icon = item.icon) },
                         label = { AppText(text = item.label) },
-                        selected = item.route == selectedRoute,
-                        onClick = { onSelected(item.route) },
+                        selected = item.id == selectedId,
+                        onClick = { onSelected(item.id) },
                         modifier = Modifier.padding(
                             horizontal = AppTheme.dimensions.spaceSm,
                             vertical = AppTheme.dimensions.spaceXs
@@ -84,15 +84,15 @@ fun AppNavigationDrawer(
 @Composable
 private fun AppNavigationDrawerPreview() = AppTheme {
     AppNavigationDrawer(
-        selectedRoute = "HOME",
+        selectedId = "HOME",
         items = listOf(
             AppNavigationUiModel(
-                route = "HOME",
+                id = "HOME",
                 label = "Home",
                 icon = AppTheme.icons.home
             ),
             AppNavigationUiModel(
-                route = "ABOUT",
+                id = "ABOUT",
                 label = "About",
                 icon = AppTheme.icons.infoCircle
             )

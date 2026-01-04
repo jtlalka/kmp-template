@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
 /**
+ *
  * Container which implements MVI (Redux) architecture pattern.
  * ```
  *     +----UI----+                       +--Container--+         +----DOMAIN----+

@@ -18,7 +18,7 @@ import kmp.template.design.theme.AppTheme
 
 @Composable
 fun AppNavigationBar(
-    selectedRoute: Any,
+    selectedId: Any,
     items: List<AppNavigationUiModel>,
     onSelected: (Any) -> Unit,
     modifier: Modifier = Modifier,
@@ -47,8 +47,8 @@ fun AppNavigationBar(
             NavigationBarItem(
                 icon = { AppIcon(icon = item.icon) },
                 label = { AppText(text = item.label) },
-                selected = item.route == selectedRoute,
-                onClick = { onSelected(item.route) },
+                selected = item.id == selectedId,
+                onClick = { onSelected(item.id) },
                 colors = itemColors
             )
         }
@@ -59,15 +59,15 @@ fun AppNavigationBar(
 @Composable
 private fun AppNavigationBarPreview() = AppTheme {
     AppNavigationBar(
-        selectedRoute = "HOME",
+        selectedId = "HOME",
         items = listOf(
             AppNavigationUiModel(
-                route = "HOME",
+                id = "HOME",
                 label = "Home",
                 icon = AppTheme.icons.home
             ),
             AppNavigationUiModel(
-                route = "ABOUT",
+                id = "ABOUT",
                 label = "About",
                 icon = AppTheme.icons.infoCircle
             )
