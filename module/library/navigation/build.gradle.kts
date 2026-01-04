@@ -4,29 +4,22 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.gradleBuildConfig)
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.kotlinSerialization)
 }
 
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.module.library.design)
-            implementation(projects.module.library.environment)
-            implementation(projects.module.library.foundation)
-            implementation(projects.module.library.navigation)
-
             implementation(libs.bundles.compose)
             implementation(libs.bundles.navigation)
-            implementation(libs.koin.compose)
-            implementation(libs.koin.viewmodel)
-
-            implementation(libs.kermit)
+        }
+        commonTest.dependencies {
+            implementation(libs.bundles.unitTest)
         }
     }
 }
 
 android {
-    namespace = "kmp.template.feature.sample"
+    namespace = "kmp.template.navigation"
 
     dependencies {
         debugImplementation(libs.compose.ui.tooling)

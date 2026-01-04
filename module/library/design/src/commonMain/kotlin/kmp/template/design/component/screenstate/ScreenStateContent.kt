@@ -24,6 +24,7 @@ import kmp.template.design.component.base.AppSectionSpacer
 import kmp.template.design.component.base.AppText
 import kmp.template.design.component.screenstate.ScreenStateUiModel.ErrorState
 import kmp.template.design.component.screenstate.ScreenStateUiModel.Loading
+import kmp.template.design.component.screenstate.ScreenStateUiModel.Content
 import kmp.template.design.component.screenstate.ScreenStateUiModel.SuccessState
 import kmp.template.design.theme.AppTheme
 
@@ -41,6 +42,7 @@ fun ScreenStateContent(
     modifier = modifier
 ) { state ->
     when (state) {
+        is Content -> {}
         is Loading -> LoadingScreenState(
             header = state.header,
             message = state.message,
@@ -204,7 +206,9 @@ private fun ScreenStateCommonContent(
 @Composable
 private fun LoadingScreenStatePreview() = AppTheme {
     ScreenStateContent(
-        screenState = Loading()
+        screenState = Loading(
+            message = "Loading..."
+        )
     )
 }
 
