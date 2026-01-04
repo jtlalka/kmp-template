@@ -3,8 +3,9 @@ android-gradle-plugin = "8.13.2"
 android-sdk-compile = "36"
 android-sdk-min = "26"
 android-sdk-target = "36"
-androidx-activity-compose = "1.12.1"
-androidx-lifecycle = "2.9.6"
+androidx-activity-compose = "1.12.2"
+androidx-lifecycle = "2.10.0-alpha07"
+androidx-navigation3 = "1.1.0-alpha01"
 compose = "1.9.3"
 compose-material3 = "1.9.0"
 java = "17"
@@ -13,9 +14,9 @@ koin = "4.1.1"
 kotlin = "2.2.21"
 kotlinx-atomic = "0.29.0"
 kotlinx-coroutines = "1.10.2"
-kotlinx-datetime = "0.7.1"
 kotlinx-serialization = "1.9.0"
 ktor = "3.3.3"
+mokkery = "3.0.0"
 
 [libraries]
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
@@ -23,8 +24,10 @@ kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotl
 
 # AndroidX
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
+androidx-lifecycle-navigation3 = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-navigation3", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
+androidx-navigation3-ui = { module = "org.jetbrains.androidx.navigation3:navigation3-ui", version.ref = "androidx-navigation3" }
 
 # Compose
 compose-animation = { module = "org.jetbrains.compose.animation:animation", version.ref = "compose" }
@@ -46,8 +49,6 @@ koin-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
-kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
-kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 
 # Ktor
@@ -74,6 +75,15 @@ compose = [
     "compose-runtime",
     "compose-ui"
 ]
+lifecycle = [
+    "androidx-lifecycle-runtime",
+    "androidx-lifecycle-viewmodel"
+]
+navigation = [
+    "androidx-lifecycle-navigation3",
+    "androidx-navigation3-ui",
+    "kotlinx-serialization-json"
+]
 unitTest = [
     "kotlin-test",
     "kotlinx-coroutines-test"
@@ -88,3 +98,4 @@ gradleBuildConfig = { id = "gradleBuildConfigPlugin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlinxAtomicFu = { id = "org.jetbrains.kotlinx.atomicfu", version.ref = "kotlinx-atomic" }
+mokkery = { id = "dev.mokkery", version.ref = "mokkery" }

@@ -11,6 +11,14 @@ sealed class ScreenStateUiModel {
     abstract val outlineButtonText: String
 
     @Stable
+    data object Content : ScreenStateUiModel() {
+        override val header: String = ""
+        override val message: String = ""
+        override val filledButtonText: String = ""
+        override val outlineButtonText: String = ""
+    }
+
+    @Stable
     data class Loading(
         override val header: String = "",
         override val message: String = "",

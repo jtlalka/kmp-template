@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.gradleBuildConfig)
     alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 kotlin {
@@ -12,11 +13,11 @@ kotlin {
             implementation(projects.module.library.design)
             implementation(projects.module.library.environment)
             implementation(projects.module.library.foundation)
-
-            implementation(libs.androidx.lifecycle.runtime)
-            implementation(libs.androidx.lifecycle.viewmodel)
+            implementation(projects.module.library.navigation)
 
             implementation(libs.bundles.compose)
+            implementation(libs.bundles.lifecycle)
+            implementation(libs.bundles.navigation)
             implementation(libs.koin.compose)
             implementation(libs.koin.viewmodel)
 
