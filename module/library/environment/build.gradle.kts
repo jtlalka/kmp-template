@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.gradleBuildConfig)
+    alias(libs.plugins.gradleBuildLogic)
     alias(libs.plugins.kotlinMultiplatform)
 }
 

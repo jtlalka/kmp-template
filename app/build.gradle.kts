@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.gradleBuildConfig)
+    alias(libs.plugins.gradleBuildLogic)
     alias(libs.plugins.kotlinMultiplatform)
 }
 

@@ -1,42 +1,32 @@
-package configuration
+package plugin.configuration
 
-import GradleConfiguration
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.LibraryExtension
-import extension.getPluginId
-import extension.getVersion
-import extension.java
-import extension.libs
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
-import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.kotlin.dsl.configure
+import plugin.BuildLogicConfiguration
+import plugin.extension.getInt
+import plugin.extension.getPluginId
+import plugin.extension.java
+import plugin.extension.libs
 
-internal class AndroidBuildConfiguration : GradleConfiguration {
-
-    private val VersionCatalog.androidApplicationPluginId
-        get() = getPluginId(alias = "androidApplication")
-
-    private val VersionCatalog.androidLibraryPluginId
-        get() = getPluginId(alias = "androidLibrary")
+internal class AndroidBuildConfiguration : BuildLogicConfiguration {
 
     private val Project.androidCompileSdk: Int
-        get() = libs.getVersion(alias = "android-sdk-compile")
+        get() = libs.getInt(alias = "android-sdk-compile")
 
     private val Project.androidMinSdk: Int
-        get() = libs.getVersion(alias = "android-sdk-min")
+        get() = libs.getInt(alias = "android-sdk-min")
 
     private val Project.androidTargetSdk: Int
-        get() = libs.getVersion(alias = "android-sdk-target")
-
-    private val Project.javaVersion: JavaVersion
-        get() = JavaVersion.valueOf("VERSION_" + libs.java)
+        get() = libs.getInt(alias = "android-sdk-target")
 
     override fun init(project: Project) = with(project) {
-        pluginManager.withPlugin(libs.androidApplicationPluginId) {
+        pluginManager.withPlugin(libs.getPluginId("androidApplication")) {
             setupAndroidApplication()
         }
-        pluginManager.withPlugin(libs.androidLibraryPluginId) {
+        pluginManager.withPlugin(libs.getPluginId("androidLibrary")) {
             setupAndroidLibrary()
         }
     }
@@ -50,8 +40,8 @@ internal class AndroidBuildConfiguration : GradleConfiguration {
                 targetSdk = androidTargetSdk
             }
             compileOptions {
-                sourceCompatibility = javaVersion
-                targetCompatibility = javaVersion
+                sourceCompatibility = JavaVersion.toVersion(libs.java)
+                targetCompatibility = JavaVersion.toVersion(libs.java)
             }
         }
     }
@@ -64,8 +54,8 @@ internal class AndroidBuildConfiguration : GradleConfiguration {
                 minSdk = androidMinSdk
             }
             compileOptions {
-                sourceCompatibility = javaVersion
-                targetCompatibility = javaVersion
+                sourceCompatibility = JavaVersion.toVersion(libs.java)
+                targetCompatibility = JavaVersion.toVersion(libs.java)
             }
         }
     }

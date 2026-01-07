@@ -1,25 +1,20 @@
-package configuration
+package plugin.configuration
 
-import GradleConfiguration
-import extension.getPluginId
-import extension.isApplicationModule
-import extension.jvmTarget
-import extension.libs
 import org.gradle.api.Project
-import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import plugin.BuildLogicConfiguration
+import plugin.extension.getPluginId
+import plugin.extension.isApplicationModule
+import plugin.extension.jvmTarget
+import plugin.extension.libs
 
-@OptIn(ExperimentalWasmDsl::class)
-internal class PlatformTargetsConvention : GradleConfiguration {
-
-    private val VersionCatalog.kotlinMultiplatformPluginId
-        get() = getPluginId(alias = "kotlinMultiplatform")
+internal class KmpTargetsConfiguration : BuildLogicConfiguration {
 
     override fun init(project: Project) = with(project) {
-        pluginManager.withPlugin(libs.kotlinMultiplatformPluginId) {
+        pluginManager.withPlugin(libs.getPluginId(alias = "kotlinMultiplatform")) {
             setupKotlinMultiplatformPlugin()
         }
     }
@@ -31,15 +26,19 @@ internal class PlatformTargetsConvention : GradleConfiguration {
                     jvmTarget.set(libs.jvmTarget)
                 }
             }
+
             iosTarget {
                 if (isApplicationModule) {
                     binaries.framework {
-                        baseName = APP_IOS_BASE_NAME
+                        baseName = "App"
                         isStatic = true
                     }
                 }
             }
+
             jvm()
+
+            @OptIn(ExperimentalWasmDsl::class)
             wasmJs {
                 browser {
                     commonWebpackConfig {
@@ -57,9 +56,5 @@ internal class PlatformTargetsConvention : GradleConfiguration {
         iosX64(target)
         iosArm64(target)
         iosSimulatorArm64(target)
-    }
-
-    private companion object Companion {
-        const val APP_IOS_BASE_NAME = "App"
     }
 }

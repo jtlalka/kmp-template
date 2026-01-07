@@ -4,7 +4,7 @@
 # Android Studio
 .idea/*
 !.idea/codeStyles/
-!.idea/fileTemplates/
+!.idea/inspectionProfiles/
 
 # Xcode
 xcuserdata/
