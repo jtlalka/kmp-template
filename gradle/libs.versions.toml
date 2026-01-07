@@ -8,6 +8,7 @@ androidx-lifecycle = "2.10.0-alpha07"
 androidx-navigation3 = "1.1.0-alpha01"
 compose = "1.9.3"
 compose-material3 = "1.9.0"
+detekt = "2.0.0-alpha.1"
 java = "17"
 kermit = "2.0.8"
 koin = "4.1.1"
@@ -63,6 +64,7 @@ ktor-serialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json", 
 
 # Gradle-config
 android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "android-gradle-plugin" }
+detekt-gradle-plugin = { module = "dev.detekt:detekt-gradle-plugin", version.ref = "detekt" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 
 [bundles]
@@ -94,7 +96,8 @@ androidApplication = { id = "com.android.application", version.ref = "android-gr
 androidLibrary = { id = "com.android.library", version.ref = "android-gradle-plugin" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose" }
-gradleBuildConfig = { id = "gradleBuildConfigPlugin" }
+detektCodeStyle = { id = "dev.detekt", version.ref = "detekt" }
+gradleBuildLogic = { id = "gradle-build-logic" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlinxAtomicFu = { id = "org.jetbrains.kotlinx.atomicfu", version.ref = "kotlinx-atomic" }

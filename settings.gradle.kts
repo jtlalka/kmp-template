@@ -1,5 +1,5 @@
 pluginManagement {
-    includeBuild("$rootDir/gradle/config")
+    includeBuild("$rootDir/gradle/build-logic")
 
     repositories {
         google()

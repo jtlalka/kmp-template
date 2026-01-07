@@ -1,6 +1,8 @@
+package plugin
+
 import org.gradle.api.Project
 
-internal interface GradleConfiguration {
+internal interface BuildLogicConfiguration {
 
     fun init(project: Project)
 }

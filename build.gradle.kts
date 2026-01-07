@@ -3,7 +3,8 @@ plugins {
     alias(libs.plugins.androidLibrary) apply false
     alias(libs.plugins.composeCompiler) apply false
     alias(libs.plugins.composeMultiplatform) apply false
-    alias(libs.plugins.gradleBuildConfig) apply false
+    alias(libs.plugins.detektCodeStyle) apply false
+    alias(libs.plugins.gradleBuildLogic) apply false
     alias(libs.plugins.kotlinMultiplatform) apply false
     alias(libs.plugins.kotlinSerialization) apply false
     alias(libs.plugins.kotlinxAtomicFu) apply false
