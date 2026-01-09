@@ -1,0 +1,75 @@
+# GitHub Actions project compilation workflow
+name: "Project Build"
+on:
+  push:
+    branches:
+      - main
+      - release
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  android-target:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: "Checkout Repository"
+        uses: actions/checkout@v6
+
+      - name: "Setup Environment"
+        uses: ./.github/actions/init
+
+      - name: "Compile Android Target"
+        run: ./gradlew assembleDebug --stacktrace
+
+      - name: "Test Android Target"
+        run: ./gradlew testDebugUnitTest --stacktrace
+
+      - name: "Upload Android Report"
+        if: always()
+        uses: ./.github/actions/report
+
+  ios-target:
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - name: "Checkout Repository"
+        uses: actions/checkout@v6
+
+      - name: "Setup Environment"
+        uses: ./.github/actions/init
+
+      - name: "Select Xcode"
+        run: sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
+
+      - name: "Compile iOS Target"
+        run: cd iosApp && xcodebuild -target "iosApp" -configuration Debug -scheme "iosApp" -destination 'platform=iOS Simulator,OS=latest,name=iPhone 16' CODE_SIGNING_ALLOWED='NO'
+
+      - name: "Test iOS Target"
+        run: ./gradlew iosSimulatorArm64Test --stacktrace
+
+      - name: "Upload iOS Report"
+        if: always()
+        uses: ./.github/actions/report
+
+  jvm-target:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: "Checkout Repository"
+        uses: actions/checkout@v6
+
+      - name: "Setup Environment"
+        uses: ./.github/actions/init
+
+      - name: "Compile JVM Target"
+        run: ./gradlew compileKotlinJvm --stacktrace
+
+      - name: "Test JVM Target"
+        run: ./gradlew jvmTest --stacktrace
+
+      - name: "Upload JVM Report"
+        if: always()
+        uses: ./.github/actions/report

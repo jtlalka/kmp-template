@@ -1,0 +1,33 @@
+# GitHub Actions project verification workflow
+name: "Project Check"
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  code-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: "Checkout Repository"
+        uses: actions/checkout@v6
+
+      - name: "Setup Environment"
+        uses: ./.github/actions/init
+
+      - name: "Detekt Check"
+        run: ./gradlew detekt --stacktrace
+
+      - name: "Lint Check"
+        run: ./gradlew lintDebug --stacktrace
+
+      - name: "Test Check"
+        run: ./gradlew test --stacktrace
+
+      - name: "Upload Report"
+        if: always()
+        uses: ./.github/actions/report

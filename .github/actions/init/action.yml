@@ -1,0 +1,17 @@
+# GitHub common initial configuration
+name: "Init Environment"
+description: "Initialize environment for CI/CD workflows"
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Setup Java JDK"
+      uses: actions/setup-java@v5
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: "Setup Gradle Cache"
+      uses: gradle/actions/setup-gradle@v5
+      with:
+        validate-wrappers: true

@@ -1,0 +1,18 @@
+# GitHub common report configuration
+name: "Results Report"
+description: "Upload Gradle reports from all modules"
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Upload Gradle Reports"
+      uses: actions/upload-artifact@v6
+      with:
+        name: ${{ github.job }}-report
+        path: |
+          app/build/reports/**
+          module/feature/*/build/reports/**
+          module/library/*/build/reports/**
+          module/service/*/build/reports/**
+        if-no-files-found: ignore
+        retention-days: 14
