@@ -38,7 +38,7 @@ internal class DetektPluginConfiguration : BuildLogicConfiguration {
 
             reports {
                 checkstyle.required.set(true)
-                html.required.set(false)
+                html.required.set(true)
                 markdown.required.set(false)
                 sarif.required.set(false)
             }
