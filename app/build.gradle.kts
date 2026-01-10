@@ -39,17 +39,35 @@ android {
         versionCode = 1
         versionName = "1.0.0"
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+    signingConfigs {
+        // IMPORTANT! Template certificate should be replaced by secure product certificate.
+        create("build") {
+            storeFile = file("certs/template.jks")
+            storePassword = "kmp#template"
+            keyAlias = "build"
+            keyPassword = "kmp#template"
+        }
+    }
+    buildTypes {
+        debug {
+            isDebuggable = true
+            isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("build")
+        }
+        release {
+            isDebuggable = false
+            isMinifyEnabled = true
+            signingConfig = signingConfigs.getByName("build")
         }
     }
     buildFeatures {
+        compose = true
         buildConfig = true
     }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
+    packaging {
+        resources {
+            excludes += "META-INF/AL2.0"
+            excludes += "META-INF/LGPL2.1"
         }
     }
     lint {

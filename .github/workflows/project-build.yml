@@ -1,10 +1,8 @@
-# GitHub Actions project compilation workflow
+# GitHub project compilation workflow
 name: "Project Build"
 on:
   push:
-    branches:
-      - main
-      - release
+    branches: [main]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -33,7 +31,7 @@ jobs:
 
   ios-target:
     runs-on: macos-latest
-    timeout-minutes: 30
+    timeout-minutes: 20
     steps:
       - name: "Checkout Repository"
         uses: actions/checkout@v6
@@ -41,11 +39,8 @@ jobs:
       - name: "Setup Environment"
         uses: ./.github/actions/init
 
-      - name: "Select Xcode"
-        run: sudo xcode-select -s /Applications/Xcode_16.4.app/Contents/Developer
-
       - name: "Compile iOS Target"
-        run: cd iosApp && xcodebuild -target "iosApp" -configuration Debug -scheme "iosApp" -destination 'platform=iOS Simulator,OS=latest,name=iPhone 16' CODE_SIGNING_ALLOWED='NO'
+        run: ./gradlew compileKotlinIosSimulatorArm64 --stacktrace
 
       - name: "Test iOS Target"
         run: ./gradlew iosSimulatorArm64Test --stacktrace
