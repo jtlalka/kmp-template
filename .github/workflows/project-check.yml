@@ -1,4 +1,4 @@
-# GitHub Actions project verification workflow
+# GitHub project verification workflow
 name: "Project Check"
 on:
   pull_request:
