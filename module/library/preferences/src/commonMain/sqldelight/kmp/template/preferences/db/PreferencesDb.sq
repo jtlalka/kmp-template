@@ -1,0 +1,24 @@
+-- Tables
+CREATE TABLE DataStore (
+    key TEXT NOT NULL PRIMARY KEY,
+    type TEXT NOT NULL,
+    encoded TEXT NOT NULL,
+    updatedAt INTEGER NOT NULL
+);
+
+-- Queries
+
+select:
+SELECT * FROM DataStore WHERE key = ?;
+
+upsert:
+INSERT OR REPLACE INTO DataStore(key, type, encoded, updatedAt) VALUES ?;
+
+exists:
+SELECT EXISTS(SELECT 1 FROM DataStore WHERE key = ?);
+
+delete:
+DELETE FROM DataStore WHERE key = ?;
+
+deleteAll:
+DELETE FROM DataStore;

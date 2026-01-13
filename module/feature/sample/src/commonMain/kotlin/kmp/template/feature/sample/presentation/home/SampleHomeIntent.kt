@@ -4,4 +4,5 @@ internal sealed interface SampleHomeIntent {
 
     data object DesignSystemPressed : SampleHomeIntent
     data object EnvironmentPressed : SampleHomeIntent
+    data object StorageDemoPressed : SampleHomeIntent
 }

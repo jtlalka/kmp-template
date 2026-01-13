@@ -9,8 +9,7 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.androidx.lifecycle.runtime)
-            implementation(libs.androidx.lifecycle.viewmodel)
+            implementation(libs.bundles.lifecycle)
             implementation(libs.kermit)
             implementation(libs.kotlinx.coroutines.core)
         }

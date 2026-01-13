@@ -160,6 +160,7 @@ fun AppButtonRow(
     itemPadding: Dp = AppTheme.dimensions.spaceSm,
     verticalAlignment: Alignment.Vertical = Alignment.CenterVertically,
     horizontalAlignment: Alignment.Horizontal = Alignment.CenterHorizontally,
+    horizontalItemLimit: Int = Int.MAX_VALUE,
     content: @Composable FlowRowScope.() -> Unit
 ) = FlowRow(
     verticalArrangement = Arrangement.spacedBy(
@@ -170,6 +171,7 @@ fun AppButtonRow(
         alignment = horizontalAlignment,
         space = itemPadding
     ),
+    maxItemsInEachRow = horizontalItemLimit,
     modifier = modifier,
     content = content
 )

@@ -16,6 +16,7 @@ kotlin {
             implementation(projects.module.library.environment)
             implementation(projects.module.library.foundation)
             implementation(projects.module.library.network)
+            implementation(projects.module.library.preferences)
 
             implementation(libs.bundles.compose)
             implementation(libs.koin.compose)

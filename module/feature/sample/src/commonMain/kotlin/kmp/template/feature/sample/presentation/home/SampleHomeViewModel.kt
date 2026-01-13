@@ -3,8 +3,10 @@ package kmp.template.feature.sample.presentation.home
 import kmp.template.design.component.screenstate.ScreenStateUiModel
 import kmp.template.feature.sample.navigation.SampleRoute.SampleDesignDestination
 import kmp.template.feature.sample.navigation.SampleRoute.SampleEnvironmentDestination
+import kmp.template.feature.sample.navigation.SampleRoute.StorageDemoDestination
 import kmp.template.feature.sample.presentation.home.SampleHomeIntent.DesignSystemPressed
 import kmp.template.feature.sample.presentation.home.SampleHomeIntent.EnvironmentPressed
+import kmp.template.feature.sample.presentation.home.SampleHomeIntent.StorageDemoPressed
 import kmp.template.foundation.mvi.MviViewModel
 import kmp.template.navigation.NavigatorEvent.NavigateTo
 
@@ -22,6 +24,7 @@ internal class SampleHomeViewModel : MviViewModel<SampleHomeViewState>(SampleHom
         when (intent) {
             is DesignSystemPressed -> onDesignSystemPressed()
             is EnvironmentPressed -> onEnvironmentPressed()
+            is StorageDemoPressed -> onStorageDemoPressed()
         }
     }
 
@@ -31,5 +34,9 @@ internal class SampleHomeViewModel : MviViewModel<SampleHomeViewState>(SampleHom
 
     private fun onEnvironmentPressed() {
         emitSideEffect(NavigateTo(SampleEnvironmentDestination))
+    }
+
+    private fun onStorageDemoPressed() {
+        emitSideEffect(NavigateTo(StorageDemoDestination))
     }
 }
