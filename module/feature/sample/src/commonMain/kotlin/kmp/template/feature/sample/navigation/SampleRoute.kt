@@ -16,5 +16,8 @@ internal sealed interface SampleRoute : NavKey {
     data object SampleEnvironmentDestination : SampleRoute
 
     @Serializable
+    data object StorageDemoDestination : SampleRoute
+
+    @Serializable
     data object AboutDestination : SampleRoute
 }

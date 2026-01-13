@@ -31,7 +31,8 @@ internal class KmpTargetsConfiguration : BuildLogicConfiguration {
                 if (isApplicationModule) {
                     binaries.framework {
                         baseName = "App"
-                        isStatic = true
+                        isStatic = false
+                        linkerOpts.add("-lsqlite3")
                     }
                 }
             }

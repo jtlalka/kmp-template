@@ -19,10 +19,12 @@ import kmp.template.feature.sample.navigation.SampleRoute.AboutDestination
 import kmp.template.feature.sample.navigation.SampleRoute.HomeDestination
 import kmp.template.feature.sample.navigation.SampleRoute.SampleDesignDestination
 import kmp.template.feature.sample.navigation.SampleRoute.SampleEnvironmentDestination
+import kmp.template.feature.sample.navigation.SampleRoute.StorageDemoDestination
 import kmp.template.feature.sample.presentation.about.SampleAboutScreen
 import kmp.template.feature.sample.presentation.design.SampleDesignScreen
 import kmp.template.feature.sample.presentation.environment.SampleEnvironmentScreen
 import kmp.template.feature.sample.presentation.home.SampleHomeScreen
+import kmp.template.feature.sample.presentation.storage.StorageDemoScreen
 import kmp.template.navigation.Navigator
 import kmp.template.navigation.compose.NavigatorDisplay
 import kmp.template.navigation.compose.NavigatorTabController
@@ -36,6 +38,7 @@ import kotlinx.serialization.modules.polymorphic
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
+@Suppress("LongMethod")
 @Composable
 fun SampleScreen() {
 
@@ -50,6 +53,7 @@ fun SampleScreen() {
                 subclass(subclass = SampleEnvironmentDestination::class, serializer = SampleEnvironmentDestination.serializer())
                 subclass(subclass = HomeDestination::class, serializer = HomeDestination.serializer())
                 subclass(subclass = AboutDestination::class, serializer = AboutDestination.serializer())
+                subclass(subclass = StorageDemoDestination::class, serializer = StorageDemoDestination.serializer())
             }
         }
     )
@@ -70,6 +74,12 @@ fun SampleScreen() {
             }
             entry<SampleEnvironmentDestination> {
                 SampleEnvironmentScreen(
+                    viewModel = koinViewModel(),
+                    navigator = navigator
+                )
+            }
+            entry<StorageDemoDestination> {
+                StorageDemoScreen(
                     viewModel = koinViewModel(),
                     navigator = navigator
                 )

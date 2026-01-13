@@ -6,6 +6,7 @@
     <string name="sample_home_card_header">Features</string>
     <string name="sample_home_card_design_label">Design System</string>
     <string name="sample_home_card_environment_label">Environment</string>
+    <string name="sample_home_card_storage_label">Storage Demo</string>
 
     <string name="sample_design_screen_header">Sample Design System</string>
     <string name="sample_design_fonts_card_header">Fonts</string>
@@ -21,6 +22,18 @@
     <string name="sample_environment_app_id_label">Application id: %1$s</string>
     <string name="sample_environment_version_label">Version name: %1$s</string>
     <string name="sample_environment_debug_label">Debug build: %1$s</string>
+
+    <string name="storage_demo_screen_header">Storage Demo</string>
+    <string name="storage_demo_counter_card_header">Screen statistics</string>
+    <string name="storage_demo_counter_card_viewmodel_label">ViewModel init counter: %1$d</string>
+    <string name="storage_demo_counter_card_screen_label">Compose init counter: %1$d</string>
+    <string name="storage_demo_interactive_header">Storage Controller</string>
+    <string name="storage_demo_interactive_value_label">Interactive value: %1$d</string>
+    <string name="storage_demo_interactive_key_label">Interactive value exists: %1$s</string>
+    <string name="storage_demo_interactive_increment_button">Increment</string>
+    <string name="storage_demo_interactive_decrement_button">Decrement</string>
+    <string name="storage_demo_interactive_remove_button">Remove key</string>
+    <string name="storage_demo_interactive_clear_button">Clear full storage</string>
 
     <string name="sample_about_screen_header">About Template</string>
     <string name="sample_about_card_header">KMP Project</string>

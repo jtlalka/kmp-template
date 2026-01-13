@@ -26,5 +26,6 @@ include(
     ":module:library:environment",
     ":module:library:foundation",
     ":module:library:navigation",
-    ":module:library:network"
+    ":module:library:network",
+    ":module:library:preferences"
 )
