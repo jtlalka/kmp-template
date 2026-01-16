@@ -1,4 +1,4 @@
-package kmp.template.preferences.internal
+package kmp.template.preferences
 
 import dev.mokkery.MockMode
 import dev.mokkery.answering.calls
@@ -7,9 +7,10 @@ import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
 import dev.mokkery.mock
 import dev.mokkery.verifySuspend
-import kmp.template.preferences.Preferences
 import kmp.template.preferences.db.DataStore
 import kmp.template.preferences.exception.NoPreferencesKeyException
+import kmp.template.preferences.exception.UnsupportedTypeException
+import kmp.template.preferences.internal.DbPreferences
 import kmp.template.preferences.internal.db.dao.PreferencesDao
 import kmp.template.preferences.internal.serializer.PrimitivesSerializer
 import kotlin.test.Test
@@ -20,7 +21,7 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class DbPreferencesTest {
+class PreferencesTest {
 
     private val preferencesDao = mock<PreferencesDao>(MockMode.autofill)
 
@@ -29,6 +30,33 @@ class DbPreferencesTest {
         serializer = PrimitivesSerializer(),
         dispatcher = UnconfinedTestDispatcher()
     )
+
+    @Test
+    fun `returns value when get is called for data stored in DB`() = runTest {
+        everySuspend { preferencesDao.selectBy("name") } returns dataStoreModel
+
+        val result = tested.get("name", String::class)
+
+        assertEquals("Alice", result)
+    }
+
+    @Test
+    fun `returns null value when get is called for data not stored in DB`() = runTest {
+        everySuspend { preferencesDao.selectBy("name") } returns null
+
+        val result = tested.get("name", String::class)
+
+        assertEquals(null, result)
+    }
+
+    @Test
+    fun `throws exception when get is called for data with wrong type`() = runTest {
+        everySuspend { preferencesDao.selectBy("name") } returns dataStoreModel
+
+        assertFailsWith<UnsupportedTypeException> {
+            tested.get("name", Int::class)
+        }
+    }
 
     @Test
     fun `returns value when getOrThrow is called for data stored in DB`() = runTest {
@@ -76,6 +104,18 @@ class DbPreferencesTest {
         assertEquals(dataStoreModel.key, captured.key)
         assertEquals(dataStoreModel.type, captured.type)
         assertEquals(dataStoreModel.encoded, captured.encoded)
+    }
+
+    @Test
+    fun `provides and updates value when edit is called with expected arguments`() = runTest {
+        everySuspend { preferencesDao.selectBy("name") } returns dataStoreModel
+
+        tested.edit("name", "") { "MS. $it" }
+
+        verifySuspend {
+            preferencesDao.selectBy("name")
+            preferencesDao.upsert(any())
+        }
     }
 
     @Test

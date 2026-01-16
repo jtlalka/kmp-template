@@ -10,6 +10,9 @@ import kmp.template.feature.sample.presentation.storage.StorageDemoIntent.Remove
 import kmp.template.foundation.mvi.MviViewModel
 import kmp.template.navigation.NavigatorEvent.NavigateUp
 import kmp.template.preferences.Preferences
+import kmp.template.preferences.edit
+import kmp.template.preferences.getOrDefault
+import kmp.template.preferences.getOrThrow
 
 internal class StorageDemoViewModel(
     private val preferences: Preferences
@@ -20,9 +23,9 @@ internal class StorageDemoViewModel(
     }
 
     private fun initViewState() = launch {
-        val viewModelInitCounter = preferences.getOrDefault(SCREEN_INIT_COUNTER_KEY, COUNTER_DEFAULT_VALUE)
-            .also { preferences.set(SCREEN_INIT_COUNTER_KEY, it + 1) }
+        preferences.edit<Long>(SCREEN_INIT_COUNTER_KEY, COUNTER_DEFAULT_VALUE) { it + 1L }
 
+        val viewModelInitCounter = preferences.getOrThrow<Long>(SCREEN_INIT_COUNTER_KEY)
         val userInteractValue = preferences.getOrDefault(USER_INTERACT_VALUE_KEY, INTERACTOR_DEFAULT_VALUE)
         val hasUserInteractKey = preferences.hasKey(USER_INTERACT_VALUE_KEY)
 
@@ -48,8 +51,8 @@ internal class StorageDemoViewModel(
     }
 
     private fun onComposeScreenLaunched() = launch {
-        val composeLaunchCounter = preferences.getOrDefault(COMPOSE_LAUNCH_COUNTER_KEY, COUNTER_DEFAULT_VALUE)
-            .also { preferences.set(COMPOSE_LAUNCH_COUNTER_KEY, it + 1) }
+        preferences.edit(COMPOSE_LAUNCH_COUNTER_KEY, COUNTER_DEFAULT_VALUE) { it + 1L }
+        val composeLaunchCounter = preferences.getOrThrow<Long>(COMPOSE_LAUNCH_COUNTER_KEY)
 
         transform { copy(composeLaunchCounter = composeLaunchCounter) }
     }
@@ -62,7 +65,7 @@ internal class StorageDemoViewModel(
         updateInteractiveValue { it - 1 }
     }
 
-    private suspend fun updateInteractiveValue(predicate: (Long) -> Long) {
+    private suspend fun updateInteractiveValue(predicate: (Int) -> Int) {
         val newValue = predicate(viewState.value.userInteractValue)
         preferences.set(USER_INTERACT_VALUE_KEY, newValue)
 
@@ -104,7 +107,7 @@ internal class StorageDemoViewModel(
         const val SCREEN_INIT_COUNTER_KEY = "screenInitCounter"
         const val COMPOSE_LAUNCH_COUNTER_KEY = "composeLaunchCounter"
         const val USER_INTERACT_VALUE_KEY = "userInteractValue"
-        const val COUNTER_DEFAULT_VALUE = 1
-        const val INTERACTOR_DEFAULT_VALUE = 0L
+        const val COUNTER_DEFAULT_VALUE = 0L
+        const val INTERACTOR_DEFAULT_VALUE = 0
     }
 }

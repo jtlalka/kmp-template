@@ -1,10 +1,10 @@
 package kmp.template.preferences
 
+import kotlin.reflect.KClass
+
 interface Preferences {
 
-    suspend fun <T : Any> getOrThrow(key: String): T
-
-    suspend fun <T : Any> getOrDefault(key: String, default: T): T
+    suspend fun <T : Any> get(key: String, kClass: KClass<T>): T?
 
     suspend fun <T : Any> set(key: String, value: T)
 
