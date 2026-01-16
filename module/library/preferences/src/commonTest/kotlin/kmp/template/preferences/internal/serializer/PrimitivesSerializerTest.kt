@@ -96,10 +96,9 @@ class PrimitivesSerializerTest {
     }
 
     @Test
-    fun `throws exception when decode correct result is casted to invalid Boolean type`() {
-        assertFailsWith<ClassCastException> {
-            val result = tested.decode<Boolean>(SerializedModel("bum", SerializedType.STRING))
-            println("BUM! this should not be printed: $result")
+    fun `throws exception when decode is used with not strict boolean string value`() {
+        assertFailsWith<IllegalArgumentException> {
+            tested.decode<Boolean>(SerializedModel("1", SerializedType.BOOLEAN))
         }
     }
 }

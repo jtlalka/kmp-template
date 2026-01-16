@@ -1,10 +1,14 @@
 package kmp.template.preferences.internal.serializer.model
 
-internal enum class SerializedType {
-    STRING,
-    INT,
-    LONG,
-    BOOLEAN,
-    FLOAT,
-    DOUBLE
+import kotlin.reflect.KClass
+
+internal enum class SerializedType(
+    val kClass: KClass<*>
+) {
+    STRING(String::class),
+    INT(Int::class),
+    LONG(Long::class),
+    BOOLEAN(Boolean::class),
+    FLOAT(Float::class),
+    DOUBLE(Double::class)
 }
