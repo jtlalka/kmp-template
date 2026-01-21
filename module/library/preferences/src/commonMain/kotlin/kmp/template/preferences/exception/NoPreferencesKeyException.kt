@@ -1,3 +1,5 @@
 package kmp.template.preferences.exception
 
-class NoPreferencesKeyException(key: String): NoSuchElementException("Preferences key: '$key' not found.")
+import kmp.template.preferences.model.Key
+
+class NoPreferencesKeyException(key: Key<*>) : NoSuchElementException("Preferences key: '${key.name}' not found.")

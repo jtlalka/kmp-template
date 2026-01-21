@@ -1,11 +1,14 @@
 package kmp.template.preferences.di
 
 import kmp.template.preferences.Preferences
-import kmp.template.preferences.internal.DbPreferences
+import kmp.template.preferences.internal.PreferencesEditor
 import kmp.template.preferences.internal.db.DatabaseQueryProvider
 import kmp.template.preferences.internal.db.dao.PreferencesDao
 import kmp.template.preferences.internal.db.dao.PreferencesDbDao
-import kmp.template.preferences.internal.serializer.PrimitivesSerializer
+import kmp.template.preferences.internal.observer.DataObserver
+import kmp.template.preferences.internal.serializer.DataSerializer
+import kmp.template.preferences.internal.timer.LocalSystemTimer
+import kmp.template.preferences.internal.timer.LocalTimer
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.factoryOf
@@ -19,14 +22,18 @@ val preferencesModule: Module = module {
     includes(preferencesPlatformModule)
 
     singleOf(::DatabaseQueryProvider)
+    singleOf(::DataSerializer)
+    singleOf(::DataObserver)
 
-    factoryOf(::PrimitivesSerializer)
     factoryOf(::PreferencesDbDao) bind PreferencesDao::class
+    factoryOf(::LocalSystemTimer) bind LocalTimer::class
 
     single<Preferences> {
-        DbPreferences(
+        PreferencesEditor(
             dao = get(),
-            serializer = get(),
+            dataSerializer = get(),
+            dataObserver = get(),
+            localTimer = get(),
             dispatcher = Dispatchers.Default
         )
     }

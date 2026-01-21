@@ -1,10 +1,12 @@
 package kmp.template.feature.sample.presentation.storage
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
@@ -13,6 +15,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kmp.template.design.annotation.ScreenPreview
 import kmp.template.design.component.base.AppBodyMediumTextStyle
@@ -32,23 +35,30 @@ import kmp.template.design.theme.AppTheme
 import kmp.template.feature.sample.presentation.storage.StorageDemoIntent.ClearStoragePressed
 import kmp.template.feature.sample.presentation.storage.StorageDemoIntent.ComposeScreenLaunched
 import kmp.template.feature.sample.presentation.storage.StorageDemoIntent.DecrementValuePressed
+import kmp.template.feature.sample.presentation.storage.StorageDemoIntent.GameItemPressed
 import kmp.template.feature.sample.presentation.storage.StorageDemoIntent.IncrementValuePressed
 import kmp.template.feature.sample.presentation.storage.StorageDemoIntent.NavigateBackPressed
+import kmp.template.feature.sample.presentation.storage.StorageDemoIntent.RemoveGamePressed
 import kmp.template.feature.sample.presentation.storage.StorageDemoIntent.RemoveKeyPressed
+import kmp.template.feature.sample.presentation.storage.model.StorageGameUiModel
 import kmp.template.foundation.lifecycle.SideEffectDispatcher
 import kmp.template.navigation.Navigator
 import kmp.template.navigation.NavigatorEvent
 import kmp_template.module.feature.sample.generated.resources.Res
+import kmp_template.module.feature.sample.generated.resources.storage_demo_clear_storage_button
+import kmp_template.module.feature.sample.generated.resources.storage_demo_clear_storage_header
 import kmp_template.module.feature.sample.generated.resources.storage_demo_counter_card_header
 import kmp_template.module.feature.sample.generated.resources.storage_demo_counter_card_screen_label
 import kmp_template.module.feature.sample.generated.resources.storage_demo_counter_card_viewmodel_label
-import kmp_template.module.feature.sample.generated.resources.storage_demo_interactive_clear_button
-import kmp_template.module.feature.sample.generated.resources.storage_demo_interactive_decrement_button
-import kmp_template.module.feature.sample.generated.resources.storage_demo_interactive_header
-import kmp_template.module.feature.sample.generated.resources.storage_demo_interactive_increment_button
-import kmp_template.module.feature.sample.generated.resources.storage_demo_interactive_key_label
-import kmp_template.module.feature.sample.generated.resources.storage_demo_interactive_remove_button
-import kmp_template.module.feature.sample.generated.resources.storage_demo_interactive_value_label
+import kmp_template.module.feature.sample.generated.resources.storage_demo_game_card_button
+import kmp_template.module.feature.sample.generated.resources.storage_demo_game_card_header
+import kmp_template.module.feature.sample.generated.resources.storage_demo_game_card_message
+import kmp_template.module.feature.sample.generated.resources.storage_demo_game_card_player_info
+import kmp_template.module.feature.sample.generated.resources.storage_demo_value_decrement_button
+import kmp_template.module.feature.sample.generated.resources.storage_demo_value_header
+import kmp_template.module.feature.sample.generated.resources.storage_demo_value_increment_button
+import kmp_template.module.feature.sample.generated.resources.storage_demo_value_remove_button
+import kmp_template.module.feature.sample.generated.resources.storage_demo_value_value_label
 import kmp_template.module.feature.sample.generated.resources.storage_demo_screen_header
 import org.jetbrains.compose.resources.stringResource
 
@@ -131,15 +141,27 @@ private fun StorageDemoContent(
     )
 ) {
     item {
-        StorageDemoCounterCard(
+        StorageDemoAppCounterCard(
+            viewState = viewState,
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
+    item {
+        StorageDemoUserValueCard(
             viewState = viewState,
             intent = intent,
             modifier = Modifier.fillMaxWidth()
         )
     }
     item {
-        StorageDemoInteractiveCard(
-            viewState = viewState,
+        StorageDemoGameCard(
+            storageGame = viewState.storageGame,
+            intent = intent,
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
+    item {
+        StorageDemoClearCard(
             intent = intent,
             modifier = Modifier.fillMaxWidth()
         )
@@ -147,64 +169,108 @@ private fun StorageDemoContent(
 }
 
 @Composable
-private fun StorageDemoCounterCard(
+private fun StorageDemoAppCounterCard(
     viewState: StorageDemoViewState,
-    intent: (StorageDemoIntent) -> Unit,
     modifier: Modifier
 ) = AppCard(
-    modifier = modifier
+    modifier = modifier,
+    itemPadding = AppTheme.dimensions.spaceMd
 ) {
     AppTitleTextStyle {
         AppText(stringResource(Res.string.storage_demo_counter_card_header))
     }
-    AppComponentSpacer()
-    AppBodyMediumTextStyle {
-        AppText(stringResource(Res.string.storage_demo_counter_card_viewmodel_label, viewState.viewModelInitCounter))
-        AppText(stringResource(Res.string.storage_demo_counter_card_screen_label, viewState.composeLaunchCounter))
+    Column {
+        AppBodyMediumTextStyle {
+            AppText(stringResource(Res.string.storage_demo_counter_card_viewmodel_label, viewState.viewModelInitCounter))
+            AppText(stringResource(Res.string.storage_demo_counter_card_screen_label, viewState.screenLaunchCounter))
+        }
     }
-    AppComponentSpacer()
-    AppButtonRow {
-        AppOutlinedButton(
-            label = stringResource(Res.string.storage_demo_interactive_clear_button),
-            onClick = { intent(ClearStoragePressed) }
+}
+
+@Composable
+private fun StorageDemoUserValueCard(
+    viewState: StorageDemoViewState,
+    intent: (StorageDemoIntent) -> Unit,
+    modifier: Modifier
+) = AppCard(
+    modifier = modifier,
+    itemPadding = AppTheme.dimensions.spaceMd
+) {
+    AppTitleTextStyle {
+        AppText(stringResource(Res.string.storage_demo_value_header))
+    }
+    AppBodyMediumTextStyle {
+        AppText(stringResource(Res.string.storage_demo_value_value_label, viewState.userInteractValue))
+    }
+    AppButtonRow(horizontalAlignment = Alignment.Start) {
+        AppFilledButton(
+            label = stringResource(Res.string.storage_demo_value_increment_button),
+            onClick = { intent(IncrementValuePressed) }
+        )
+        AppFilledButton(
+            label = stringResource(Res.string.storage_demo_value_decrement_button),
+            onClick = { intent(DecrementValuePressed) }
+        )
+        AppFilledButton(
+            label = stringResource(Res.string.storage_demo_value_remove_button),
+            onClick = { intent(RemoveKeyPressed) }
         )
     }
 }
 
 @Composable
-private fun StorageDemoInteractiveCard(
-    viewState: StorageDemoViewState,
+private fun StorageDemoGameCard(
+    storageGame: StorageGameUiModel,
     intent: (StorageDemoIntent) -> Unit,
     modifier: Modifier
 ) = AppCard(
-    modifier = modifier
+    modifier = modifier,
+    itemPadding = AppTheme.dimensions.spaceMd
 ) {
     AppTitleTextStyle {
-        AppText(stringResource(Res.string.storage_demo_interactive_header))
+        AppText(stringResource(Res.string.storage_demo_game_card_header))
     }
-    AppComponentSpacer()
     AppBodyMediumTextStyle {
-        AppText(stringResource(Res.string.storage_demo_interactive_value_label, viewState.userInteractValue))
-        AppText(stringResource(Res.string.storage_demo_interactive_key_label, viewState.userInteractKeyExist))
+        AppText(stringResource(Res.string.storage_demo_game_card_message))
+        if (storageGame.firstPlayerRound) {
+            AppText(stringResource(Res.string.storage_demo_game_card_player_info, storageGame.firstPlayerSign))
+        } else {
+            AppText(stringResource(Res.string.storage_demo_game_card_player_info, storageGame.secondPlayerSign))
+        }
     }
-    AppComponentSpacer()
     AppButtonRow(
         horizontalAlignment = Alignment.Start,
-        horizontalItemLimit = 1
+        horizontalItemLimit = 3
     ) {
-        AppFilledButton(
-            label = stringResource(Res.string.storage_demo_interactive_increment_button),
-            onClick = { intent(IncrementValuePressed) }
-        )
-        AppFilledButton(
-            label = stringResource(Res.string.storage_demo_interactive_decrement_button),
-            onClick = { intent(DecrementValuePressed) }
-        )
-        AppFilledButton(
-            label = stringResource(Res.string.storage_demo_interactive_remove_button),
-            onClick = { intent(RemoveKeyPressed) }
-        )
+        storageGame.gameBoard.forEachIndexed { index, item ->
+            AppOutlinedButton(
+                label = item,
+                modifier = Modifier.size(size = 64.dp),
+                onClick = { intent(GameItemPressed(index)) }
+            )
+        }
     }
+    AppFilledButton(
+        label = stringResource(Res.string.storage_demo_game_card_button),
+        onClick = { intent(RemoveGamePressed) }
+    )
+}
+
+@Composable
+private fun StorageDemoClearCard(
+    intent: (StorageDemoIntent) -> Unit,
+    modifier: Modifier
+) = AppCard(
+    modifier = modifier,
+    itemPadding = AppTheme.dimensions.spaceMd
+) {
+    AppTitleTextStyle {
+        AppText(stringResource(Res.string.storage_demo_clear_storage_header))
+    }
+    AppOutlinedButton(
+        label = stringResource(Res.string.storage_demo_clear_storage_button),
+        onClick = { intent(ClearStoragePressed) }
+    )
 }
 
 @ScreenPreview
@@ -212,7 +278,8 @@ private fun StorageDemoInteractiveCard(
 private fun ScreenPreview() = AppTheme {
     StorageDemoScreen(
         viewState = StorageDemoViewState(
-            screenState = ScreenStateUiModel.Content
+            screenState = ScreenStateUiModel.Content,
+            storageGame = StorageGameUiModel()
         ),
         intent = {}
     )

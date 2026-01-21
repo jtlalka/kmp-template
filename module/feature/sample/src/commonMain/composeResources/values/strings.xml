@@ -24,16 +24,20 @@
     <string name="sample_environment_debug_label">Debug build: %1$s</string>
 
     <string name="storage_demo_screen_header">Storage Demo</string>
-    <string name="storage_demo_counter_card_header">Screen statistics</string>
+    <string name="storage_demo_counter_card_header">Application settings</string>
     <string name="storage_demo_counter_card_viewmodel_label">ViewModel init counter: %1$d</string>
     <string name="storage_demo_counter_card_screen_label">Compose init counter: %1$d</string>
-    <string name="storage_demo_interactive_header">Storage Controller</string>
-    <string name="storage_demo_interactive_value_label">Interactive value: %1$d</string>
-    <string name="storage_demo_interactive_key_label">Interactive value exists: %1$s</string>
-    <string name="storage_demo_interactive_increment_button">Increment</string>
-    <string name="storage_demo_interactive_decrement_button">Decrement</string>
-    <string name="storage_demo_interactive_remove_button">Remove key</string>
-    <string name="storage_demo_interactive_clear_button">Clear full storage</string>
+    <string name="storage_demo_value_header">User settings</string>
+    <string name="storage_demo_value_value_label">Interactive value: %1$d</string>
+    <string name="storage_demo_value_increment_button">👍</string>
+    <string name="storage_demo_value_decrement_button">👎</string>
+    <string name="storage_demo_value_remove_button">❌</string>
+    <string name="storage_demo_game_card_header">Object serialization</string>
+    <string name="storage_demo_game_card_message">Simple game stored in user storage with object serialization.</string>
+    <string name="storage_demo_game_card_player_info">Player '%1$s' turn:</string>
+    <string name="storage_demo_game_card_button">Clear game</string>
+    <string name="storage_demo_clear_storage_header">Clear storage</string>
+    <string name="storage_demo_clear_storage_button">Clear full storage</string>
 
     <string name="sample_about_screen_header">About Template</string>
     <string name="sample_about_card_header">KMP Project</string>

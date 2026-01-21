@@ -4,15 +4,21 @@ import kmp.template.design.component.screenstate.ScreenStateUiModel
 import kmp.template.feature.sample.presentation.storage.StorageDemoIntent.ClearStoragePressed
 import kmp.template.feature.sample.presentation.storage.StorageDemoIntent.ComposeScreenLaunched
 import kmp.template.feature.sample.presentation.storage.StorageDemoIntent.DecrementValuePressed
+import kmp.template.feature.sample.presentation.storage.StorageDemoIntent.GameItemPressed
 import kmp.template.feature.sample.presentation.storage.StorageDemoIntent.IncrementValuePressed
 import kmp.template.feature.sample.presentation.storage.StorageDemoIntent.NavigateBackPressed
+import kmp.template.feature.sample.presentation.storage.StorageDemoIntent.RemoveGamePressed
 import kmp.template.feature.sample.presentation.storage.StorageDemoIntent.RemoveKeyPressed
+import kmp.template.feature.sample.presentation.storage.model.StorageGameUiModel
+import kmp.template.feature.sample.presentation.storage.model.StorageGameUiModel.Companion.EMPTY_PLACE
 import kmp.template.foundation.mvi.MviViewModel
 import kmp.template.navigation.NavigatorEvent.NavigateUp
 import kmp.template.preferences.Preferences
-import kmp.template.preferences.edit
 import kmp.template.preferences.getOrDefault
 import kmp.template.preferences.getOrThrow
+import kmp.template.preferences.model.Key
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 
 internal class StorageDemoViewModel(
     private val preferences: Preferences
@@ -20,23 +26,49 @@ internal class StorageDemoViewModel(
 
     init {
         initViewState()
+        observeScreenLaunchCounter()
+        observeUserValuePreference()
+        observeGameObjectPreference()
     }
 
     private fun initViewState() = launch {
-        preferences.edit<Long>(SCREEN_INIT_COUNTER_KEY, COUNTER_DEFAULT_VALUE) { it + 1L }
+        preferences.edit(VIEW_MODEL_INIT_COUNTER_KEY) { (it ?: VIEW_MODEL_INIT_DEFAULT_VALUE) + 1 }
 
-        val viewModelInitCounter = preferences.getOrThrow<Long>(SCREEN_INIT_COUNTER_KEY)
-        val userInteractValue = preferences.getOrDefault(USER_INTERACT_VALUE_KEY, INTERACTOR_DEFAULT_VALUE)
-        val hasUserInteractKey = preferences.hasKey(USER_INTERACT_VALUE_KEY)
+        val viewModelInitCounter = preferences.getOrThrow(VIEW_MODEL_INIT_COUNTER_KEY)
+        val screenLaunchCounter = preferences.getOrDefault(SCREEN_LAUNCH_COUNTER_KEY, SCREEN_LAUNCH_DEFAULT_VALUE)
+        val userInteractValue = preferences.getOrDefault(USER_INTERACT_VALUE_KEY, USER_INTERACT_DEFAULT_VALUE)
+        val storageGame = preferences.getOrDefault(GAME_SERIALIZED_OBJECT_KEY, StorageGameUiModel())
 
         transform {
             copy(
                 screenState = ScreenStateUiModel.Content,
                 viewModelInitCounter = viewModelInitCounter,
+                screenLaunchCounter = screenLaunchCounter,
                 userInteractValue = userInteractValue,
-                userInteractKeyExist = hasUserInteractKey
+                storageGame = storageGame
             )
         }
+    }
+
+    private fun observeScreenLaunchCounter() = launch {
+        preferences
+            .observe(key = SCREEN_LAUNCH_COUNTER_KEY)
+            .map { it ?: SCREEN_LAUNCH_DEFAULT_VALUE }
+            .collectLatest { transform { copy(screenLaunchCounter = it) } }
+    }
+
+    private fun observeUserValuePreference() = launch {
+        preferences
+            .observe(key = USER_INTERACT_VALUE_KEY)
+            .map { it ?: USER_INTERACT_DEFAULT_VALUE }
+            .collectLatest { transform { copy(userInteractValue = it) } }
+    }
+
+    private fun observeGameObjectPreference() = launch {
+        preferences
+            .observe(key = GAME_SERIALIZED_OBJECT_KEY)
+            .map { it ?: StorageGameUiModel() }
+            .collectLatest { transform { copy(storageGame = it) } }
     }
 
     fun onIntent(intent: StorageDemoIntent) {
@@ -45,58 +77,56 @@ internal class StorageDemoViewModel(
             is IncrementValuePressed -> onIncrementValuePressed()
             is DecrementValuePressed -> onDecrementValuePressed()
             is RemoveKeyPressed -> onRemoveKeyPressed()
+            is RemoveGamePressed -> onRemoveGamePressed()
+            is GameItemPressed -> onGameItemPressed(id = intent.id)
             is ClearStoragePressed -> onClearStoragePressed()
             is NavigateBackPressed -> onNavigateBackPressed()
         }
     }
 
     private fun onComposeScreenLaunched() = launch {
-        preferences.edit(COMPOSE_LAUNCH_COUNTER_KEY, COUNTER_DEFAULT_VALUE) { it + 1L }
-        val composeLaunchCounter = preferences.getOrThrow<Long>(COMPOSE_LAUNCH_COUNTER_KEY)
-
-        transform { copy(composeLaunchCounter = composeLaunchCounter) }
+        preferences.edit(SCREEN_LAUNCH_COUNTER_KEY) { (it ?: SCREEN_LAUNCH_DEFAULT_VALUE) + 1L }
     }
 
     private fun onIncrementValuePressed() = launch {
-        updateInteractiveValue { it + 1 }
+        preferences.set(USER_INTERACT_VALUE_KEY, viewState.value.userInteractValue + 1)
     }
 
     private fun onDecrementValuePressed() = launch {
-        updateInteractiveValue { it - 1 }
-    }
-
-    private suspend fun updateInteractiveValue(predicate: (Int) -> Int) {
-        val newValue = predicate(viewState.value.userInteractValue)
-        preferences.set(USER_INTERACT_VALUE_KEY, newValue)
-
-        transform {
-            copy(
-                userInteractValue = newValue,
-                userInteractKeyExist = true
-            )
-        }
+        preferences.set(USER_INTERACT_VALUE_KEY, viewState.value.userInteractValue - 1)
     }
 
     private fun onRemoveKeyPressed() = launch {
         preferences.remove(USER_INTERACT_VALUE_KEY)
-        transform {
-            copy(
-                userInteractValue = INTERACTOR_DEFAULT_VALUE,
-                userInteractKeyExist = false
+    }
+
+    private fun onRemoveGamePressed() = launch {
+        preferences.remove(GAME_SERIALIZED_OBJECT_KEY)
+    }
+
+    private fun onGameItemPressed(id: Int) = launch {
+        with(viewState.value.storageGame) {
+            val playerSign = when (firstPlayerRound) {
+                true -> firstPlayerSign
+                false -> secondPlayerSign
+            }
+            val updatedGame = copy(
+                firstPlayerRound = !firstPlayerRound,
+                gameBoard = gameBoard.mapIndexed { index, item ->
+                    when (index) {
+                        id if item == EMPTY_PLACE -> playerSign
+                        id if item != EMPTY_PLACE -> return@launch
+                        else -> item
+                    }
+                }
             )
+            preferences.set(GAME_SERIALIZED_OBJECT_KEY, updatedGame)
         }
     }
 
     private fun onClearStoragePressed() = launch {
         preferences.clear()
-        transform {
-            copy(
-                viewModelInitCounter = 0,
-                composeLaunchCounter = 0,
-                userInteractValue = INTERACTOR_DEFAULT_VALUE,
-                userInteractKeyExist = false
-            )
-        }
+        transform { copy(viewModelInitCounter = VIEW_MODEL_INIT_DEFAULT_VALUE) }
     }
 
     private fun onNavigateBackPressed() {
@@ -104,10 +134,13 @@ internal class StorageDemoViewModel(
     }
 
     private companion object {
-        const val SCREEN_INIT_COUNTER_KEY = "screenInitCounter"
-        const val COMPOSE_LAUNCH_COUNTER_KEY = "composeLaunchCounter"
-        const val USER_INTERACT_VALUE_KEY = "userInteractValue"
-        const val COUNTER_DEFAULT_VALUE = 0L
-        const val INTERACTOR_DEFAULT_VALUE = 0
+        val VIEW_MODEL_INIT_COUNTER_KEY = Key.intKey("viewModelInitCounter")
+        val SCREEN_LAUNCH_COUNTER_KEY = Key.longKey("screenLaunchCounter")
+        val USER_INTERACT_VALUE_KEY = Key.intKey("userInteractValue")
+        val GAME_SERIALIZED_OBJECT_KEY = Key.objectKey("gameSerializedObject", StorageGameUiModel.serializer())
+
+        const val VIEW_MODEL_INIT_DEFAULT_VALUE = 0
+        const val SCREEN_LAUNCH_DEFAULT_VALUE = 0L
+        const val USER_INTERACT_DEFAULT_VALUE = 0
     }
 }
