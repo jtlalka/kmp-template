@@ -2,8 +2,9 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.gradleBuildLogic)
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.sqldelight)
+    alias(libs.plugins.kotlinxAtomicFu)
     alias(libs.plugins.mokkery)
+    alias(libs.plugins.sqldelight)
 }
 
 kotlin {
@@ -12,7 +13,7 @@ kotlin {
             implementation(libs.kermit)
             implementation(libs.koin.core)
             implementation(libs.kotlinx.coroutines.core)
-            implementation(libs.kotlinx.datetime)
+            implementation(libs.kotlinx.serialization.json)
             implementation(libs.sqldelight.runtime)
         }
         commonTest.dependencies {
