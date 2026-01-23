@@ -17,7 +17,7 @@ class DataObserverTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     private val dispatcher = UnconfinedTestDispatcher()
 
-    private val tested = DataObserver()
+    private val tested: DataObserver = DataFlowObserver()
 
     @Test
     fun `returns flow with the same instances when observeKey is called twice`() {

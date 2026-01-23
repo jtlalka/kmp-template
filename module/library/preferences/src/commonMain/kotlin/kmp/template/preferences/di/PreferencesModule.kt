@@ -5,6 +5,7 @@ import kmp.template.preferences.internal.PreferencesEditor
 import kmp.template.preferences.internal.db.DatabaseQueryProvider
 import kmp.template.preferences.internal.db.dao.PreferencesDao
 import kmp.template.preferences.internal.db.dao.PreferencesDbDao
+import kmp.template.preferences.internal.observer.DataFlowObserver
 import kmp.template.preferences.internal.observer.DataObserver
 import kmp.template.preferences.internal.serializer.DataSerializer
 import kmp.template.preferences.internal.timer.LocalSystemTimer
@@ -23,9 +24,9 @@ val preferencesModule: Module = module {
 
     singleOf(::DatabaseQueryProvider)
     singleOf(::DataSerializer)
-    singleOf(::DataObserver)
 
     factoryOf(::PreferencesDbDao) bind PreferencesDao::class
+    factoryOf(::DataFlowObserver) bind DataObserver::class
     factoryOf(::LocalSystemTimer) bind LocalTimer::class
 
     single<Preferences> {
