@@ -12,8 +12,7 @@ import kmp.template.preferences.model.KeyType.STRING
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.serializer
 
-@ConsistentCopyVisibility
-data class Key<T : Any> internal constructor(
+class Key<T : Any> internal constructor(
     val name: String,
     val type: KeyType,
     val serializer: KSerializer<T>
@@ -29,6 +28,8 @@ data class Key<T : Any> internal constructor(
         result = 31 * result + serializer.descriptor.hashCode()
         return result
     }
+
+    override fun toString(): String = "Key(name=$name, type=$type)"
 
     @Suppress("TooManyFunctions")
     companion object {

@@ -24,6 +24,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 
@@ -31,15 +32,26 @@ import kotlinx.coroutines.test.runTest
 class PreferencesEditorTest {
 
     private val preferencesDao = mock<PreferencesDao>(MockMode.autofill)
+    private val dataObserver = mock<DataObserver>(MockMode.autofill)
     private val localTimer = mock<LocalTimer>(MockMode.autofill)
 
     private val tested: Preferences = PreferencesEditor(
         dao = preferencesDao,
         dataSerializer = DataSerializer(),
-        dataObserver = DataObserver(),
+        dataObserver = dataObserver,
         localTimer = localTimer,
         dispatcher = UnconfinedTestDispatcher()
     )
+
+    @Test
+    fun `returns empty shared flow when observe function is called`() = runTest {
+        val expectedFlow = MutableSharedFlow<String>()
+        everySuspend { dataObserver.observeKey(stringKey("name")) } returns expectedFlow
+
+        val result = tested.observe(stringKey("name"))
+
+        assertEquals(expectedFlow, result)
+    }
 
     @Test
     fun `returns value when get function is called for existing data`() = runTest {
@@ -126,9 +138,18 @@ class PreferencesEditorTest {
     fun `updates data by using preferences dao when set function is called`() = runTest {
         every { localTimer.getCurrentTime() } returns dataStoreModel.updatedAt
 
-        tested.set(stringKey("name"), "Alice")
+        tested.set(stringKey("name"), "Leon")
 
-        verifySuspend { preferencesDao.upsert(dataStoreModel) }
+        verifySuspend { preferencesDao.upsert(dataStoreModel.copy(encoded = """"Leon"""")) }
+    }
+
+    @Test
+    fun `updates data observer when set function is called`() = runTest {
+        every { localTimer.getCurrentTime() } returns dataStoreModel.updatedAt
+
+        tested.set(stringKey("name"), "Leon")
+
+        verifySuspend { dataObserver.updateKey(stringKey("name"), "Leon") }
     }
 
     @Test
@@ -141,6 +162,7 @@ class PreferencesEditorTest {
         verifySuspend {
             preferencesDao.selectBy("name")
             preferencesDao.upsert(dataStoreModel.copy(encoded = """"MS. Alice""""))
+            dataObserver.updateKey(stringKey("name"), "MS. Alice")
         }
     }
 
@@ -188,6 +210,13 @@ class PreferencesEditorTest {
     }
 
     @Test
+    fun `updates data observer when remove function is called`() = runTest {
+        tested.remove(stringKey("name"))
+
+        verifySuspend { dataObserver.updateKey(stringKey("name"), null) }
+    }
+
+    @Test
     fun `throws exception when delete function throws exception from DB Dao`() = runTest {
         everySuspend { preferencesDao.delete("name") } throws RuntimeException("Boom!")
 
@@ -201,6 +230,13 @@ class PreferencesEditorTest {
         tested.clear()
 
         verifySuspend { preferencesDao.deleteAll() }
+    }
+
+    @Test
+    fun `updates data observer when clear function is called`() = runTest {
+        tested.clear()
+
+        verifySuspend { dataObserver.clearValues() }
     }
 
     @Test

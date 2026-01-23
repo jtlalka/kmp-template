@@ -21,8 +21,8 @@ interface Preferences {
     suspend fun clear()
 }
 
-suspend fun <T : Any> Preferences.getOrThrow(key: Key<T>): T =
+suspend inline fun <T : Any> Preferences.getOrThrow(key: Key<T>): T =
     get(key) ?: throw NoPreferencesKeyException(key)
 
-suspend fun <T : Any> Preferences.getOrDefault(key: Key<T>, default: T): T =
+suspend inline fun <T : Any> Preferences.getOrDefault(key: Key<T>, default: T): T =
     get(key) ?: default
