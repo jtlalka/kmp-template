@@ -23,8 +23,9 @@ import kmp.template.design.component.base.AppText
 import kmp.template.design.component.screenstate.ScreenStateContent
 import kmp.template.design.component.screenstate.ScreenStateUiModel
 import kmp.template.design.theme.AppTheme
-import kmp.template.feature.sample.presentation.home.SampleHomeIntent.DesignSystemPressed
-import kmp.template.feature.sample.presentation.home.SampleHomeIntent.EnvironmentPressed
+import kmp.template.feature.sample.presentation.home.SampleHomeIntent.DesignDemoPressed
+import kmp.template.feature.sample.presentation.home.SampleHomeIntent.EnvironmentDemoPressed
+import kmp.template.feature.sample.presentation.home.SampleHomeIntent.NetworkDemoPressed
 import kmp.template.feature.sample.presentation.home.SampleHomeIntent.StorageDemoPressed
 import kmp.template.foundation.lifecycle.SideEffectDispatcher
 import kmp.template.navigation.Navigator
@@ -33,6 +34,7 @@ import kmp_template.module.feature.sample.generated.resources.Res
 import kmp_template.module.feature.sample.generated.resources.sample_home_card_design_label
 import kmp_template.module.feature.sample.generated.resources.sample_home_card_environment_label
 import kmp_template.module.feature.sample.generated.resources.sample_home_card_header
+import kmp_template.module.feature.sample.generated.resources.sample_home_card_network_label
 import kmp_template.module.feature.sample.generated.resources.sample_home_card_storage_label
 import kmp_template.module.feature.sample.generated.resources.sample_home_screen_header
 import org.jetbrains.compose.resources.stringResource
@@ -52,7 +54,7 @@ internal fun SampleHomeScreen(
 
     SampleHomeScreen(
         viewState = viewState,
-        intent = viewModel::processIntent
+        intent = viewModel::onIntent
     )
 }
 
@@ -116,15 +118,19 @@ private fun SampleHomeCard(
 
     AppFilledButton(
         label = stringResource(Res.string.sample_home_card_design_label),
-        onClick = { intent(DesignSystemPressed) }
+        onClick = { intent(DesignDemoPressed) }
     )
     AppFilledButton(
         label = stringResource(Res.string.sample_home_card_environment_label),
-        onClick = { intent(EnvironmentPressed) }
+        onClick = { intent(EnvironmentDemoPressed) }
     )
     AppFilledButton(
         label = stringResource(Res.string.sample_home_card_storage_label),
         onClick = { intent(StorageDemoPressed) }
+    )
+    AppFilledButton(
+        label = stringResource(Res.string.sample_home_card_network_label),
+        onClick = { intent(NetworkDemoPressed) }
     )
 }
 

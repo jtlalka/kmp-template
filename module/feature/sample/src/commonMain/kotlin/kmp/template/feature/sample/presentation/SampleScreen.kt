@@ -16,14 +16,16 @@ import kmp.template.design.component.navigation.AppNavigationBar
 import kmp.template.design.component.navigation.AppNavigationUiModel
 import kmp.template.design.theme.AppTheme
 import kmp.template.feature.sample.navigation.SampleRoute.AboutDestination
+import kmp.template.feature.sample.navigation.SampleRoute.DesignDemoDestination
+import kmp.template.feature.sample.navigation.SampleRoute.EnvironmentDemoDestination
 import kmp.template.feature.sample.navigation.SampleRoute.HomeDestination
-import kmp.template.feature.sample.navigation.SampleRoute.SampleDesignDestination
-import kmp.template.feature.sample.navigation.SampleRoute.SampleEnvironmentDestination
+import kmp.template.feature.sample.navigation.SampleRoute.NetworkDemoDestination
 import kmp.template.feature.sample.navigation.SampleRoute.StorageDemoDestination
 import kmp.template.feature.sample.presentation.about.SampleAboutScreen
-import kmp.template.feature.sample.presentation.design.SampleDesignScreen
-import kmp.template.feature.sample.presentation.environment.SampleEnvironmentScreen
+import kmp.template.feature.sample.presentation.design.DesignDemoScreen
+import kmp.template.feature.sample.presentation.environment.EnvironmentDemoScreen
 import kmp.template.feature.sample.presentation.home.SampleHomeScreen
+import kmp.template.feature.sample.presentation.network.NetworkDemoScreen
 import kmp.template.feature.sample.presentation.storage.StorageDemoScreen
 import kmp.template.navigation.Navigator
 import kmp.template.navigation.compose.NavigatorDisplay
@@ -49,10 +51,11 @@ fun SampleScreen() {
         initialRoute = HomeDestination,
         serializers = SerializersModule {
             polymorphic(NavKey::class) {
-                subclass(subclass = SampleDesignDestination::class, serializer = SampleDesignDestination.serializer())
-                subclass(subclass = SampleEnvironmentDestination::class, serializer = SampleEnvironmentDestination.serializer())
-                subclass(subclass = HomeDestination::class, serializer = HomeDestination.serializer())
                 subclass(subclass = AboutDestination::class, serializer = AboutDestination.serializer())
+                subclass(subclass = DesignDemoDestination::class, serializer = DesignDemoDestination.serializer())
+                subclass(subclass = EnvironmentDemoDestination::class, serializer = EnvironmentDemoDestination.serializer())
+                subclass(subclass = HomeDestination::class, serializer = HomeDestination.serializer())
+                subclass(subclass = NetworkDemoDestination::class, serializer = NetworkDemoDestination.serializer())
                 subclass(subclass = StorageDemoDestination::class, serializer = StorageDemoDestination.serializer())
             }
         }
@@ -66,20 +69,26 @@ fun SampleScreen() {
                     navigator = navigator
                 )
             }
-            entry<SampleDesignDestination> {
-                SampleDesignScreen(
+            entry<DesignDemoDestination> {
+                DesignDemoScreen(
                     viewModel = koinViewModel(),
                     navigator = navigator
                 )
             }
-            entry<SampleEnvironmentDestination> {
-                SampleEnvironmentScreen(
+            entry<EnvironmentDemoDestination> {
+                EnvironmentDemoScreen(
                     viewModel = koinViewModel(),
                     navigator = navigator
                 )
             }
             entry<StorageDemoDestination> {
                 StorageDemoScreen(
+                    viewModel = koinViewModel(),
+                    navigator = navigator
+                )
+            }
+            entry<NetworkDemoDestination> {
+                NetworkDemoScreen(
                     viewModel = koinViewModel(),
                     navigator = navigator
                 )

@@ -37,23 +37,23 @@ import kmp.template.design.component.screenstate.ScreenStateContent
 import kmp.template.design.component.screenstate.ScreenStateUiModel
 import kmp.template.design.component.topbar.AppTopCenterBar
 import kmp.template.design.theme.AppTheme
-import kmp.template.feature.sample.presentation.design.SampleDesignIntent.NavigateBackPressed
+import kmp.template.feature.sample.presentation.design.DesignDemoIntent.NavigateBackPressed
 import kmp.template.foundation.lifecycle.SideEffectDispatcher
 import kmp.template.navigation.Navigator
 import kmp.template.navigation.NavigatorEvent
 import kmp_template.module.feature.sample.generated.resources.Res
-import kmp_template.module.feature.sample.generated.resources.sample_design_buttons_card_header
-import kmp_template.module.feature.sample.generated.resources.sample_design_fonts_card_header
-import kmp_template.module.feature.sample.generated.resources.sample_design_icons_card_header
-import kmp_template.module.feature.sample.generated.resources.sample_design_inputs_card_header
-import kmp_template.module.feature.sample.generated.resources.sample_design_progress_card_header
-import kmp_template.module.feature.sample.generated.resources.sample_design_screen_header
-import kmp_template.module.feature.sample.generated.resources.sample_design_spacers_card_header
+import kmp_template.module.feature.sample.generated.resources.design_demo_buttons_card_header
+import kmp_template.module.feature.sample.generated.resources.design_demo_fonts_card_header
+import kmp_template.module.feature.sample.generated.resources.design_demo_icons_card_header
+import kmp_template.module.feature.sample.generated.resources.design_demo_inputs_card_header
+import kmp_template.module.feature.sample.generated.resources.design_demo_progress_card_header
+import kmp_template.module.feature.sample.generated.resources.design_demo_screen_header
+import kmp_template.module.feature.sample.generated.resources.design_demo_spacers_card_header
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun SampleDesignScreen(
-    viewModel: SampleDesignViewModel,
+internal fun DesignDemoScreen(
+    viewModel: DesignDemoViewModel,
     navigator: Navigator
 ) {
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
@@ -64,24 +64,24 @@ internal fun SampleDesignScreen(
         }
     }
 
-    SampleDesignScreen(
+    DesignDemoScreen(
         viewState = viewState,
-        intent = viewModel::processIntent
+        intent = viewModel::onIntent
     )
 }
 
 @Composable
-private fun SampleDesignScreen(
-    viewState: SampleDesignViewState,
-    intent: (SampleDesignIntent) -> Unit
+private fun DesignDemoScreen(
+    viewState: DesignDemoViewState,
+    intent: (DesignDemoIntent) -> Unit
 ) = AppScaffold(
     topBar = {
-        SampleDesignTopBar(
+        DesignDemoTopBar(
             intent = intent
         )
     },
     content = { contentPadding ->
-        SampleDesignContent(
+        DesignDemoContent(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(top = contentPadding.calculateTopPadding())
@@ -95,11 +95,11 @@ private fun SampleDesignScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SampleDesignTopBar(
-    intent: (SampleDesignIntent) -> Unit
+private fun DesignDemoTopBar(
+    intent: (DesignDemoIntent) -> Unit
 ) = AppTopCenterBar(
     title = {
-        AppText(text = stringResource(Res.string.sample_design_screen_header))
+        AppText(text = stringResource(Res.string.design_demo_screen_header))
     },
     navigationIcon = {
         IconButton(onClick = { intent(NavigateBackPressed) }) {
@@ -109,7 +109,7 @@ private fun SampleDesignTopBar(
 )
 
 @Composable
-private fun SampleDesignContent(
+private fun DesignDemoContent(
     modifier: Modifier,
 ) = LazyColumn(
     modifier = modifier,
@@ -121,17 +121,17 @@ private fun SampleDesignContent(
         vertical = AppTheme.dimensions.spaceSm
     )
 ) {
-    item { SampleDesignTypography() }
-    item { SampleDesignIcons() }
-    item { SampleDesignButtons() }
-    item { SampleDesignInputs() }
-    item { SampleDesignProgress() }
-    item { SampleDesignSpacers() }
+    item { DesignDemoTypography() }
+    item { DesignDemoIcons() }
+    item { DesignDemoButtons() }
+    item { DesignDemoInputs() }
+    item { DesignDemoProgress() }
+    item { DesignDemoSpacers() }
 }
 
 @Composable
-private fun SampleDesignTypography() = SampleDesignCardItem(
-    title = stringResource(Res.string.sample_design_fonts_card_header)
+private fun DesignDemoTypography() = DesignDemoCardItem(
+    title = stringResource(Res.string.design_demo_fonts_card_header)
 ) {
     AppText(text = "Text format: display", style = AppTheme.typography.display)
     AppText(text = "Text format: headline", style = AppTheme.typography.headline)
@@ -143,8 +143,8 @@ private fun SampleDesignTypography() = SampleDesignCardItem(
 }
 
 @Composable
-private fun SampleDesignIcons() = SampleDesignCardItem(
-    title = stringResource(Res.string.sample_design_icons_card_header)
+private fun DesignDemoIcons() = DesignDemoCardItem(
+    title = stringResource(Res.string.design_demo_icons_card_header)
 ) {
     AppButtonRow(horizontalAlignment = Alignment.Start) {
         AppIcon(icon = AppTheme.icons.home)
@@ -160,8 +160,8 @@ private fun SampleDesignIcons() = SampleDesignCardItem(
 }
 
 @Composable
-private fun SampleDesignButtons() = SampleDesignCardItem(
-    title = stringResource(Res.string.sample_design_buttons_card_header)
+private fun DesignDemoButtons() = DesignDemoCardItem(
+    title = stringResource(Res.string.design_demo_buttons_card_header)
 ) {
     AppButtonRow(horizontalAlignment = Alignment.Start) {
         AppFilledButton(
@@ -196,8 +196,8 @@ private fun SampleDesignButtons() = SampleDesignCardItem(
 }
 
 @Composable
-private fun SampleDesignInputs() = SampleDesignCardItem(
-    title = stringResource(Res.string.sample_design_inputs_card_header)
+private fun DesignDemoInputs() = DesignDemoCardItem(
+    title = stringResource(Res.string.design_demo_inputs_card_header)
 ) {
     AppOutlinedInput(
         label = "Empty input",
@@ -220,8 +220,8 @@ private fun SampleDesignInputs() = SampleDesignCardItem(
 }
 
 @Composable
-private fun SampleDesignProgress() = SampleDesignCardItem(
-    title = stringResource(Res.string.sample_design_progress_card_header)
+private fun DesignDemoProgress() = DesignDemoCardItem(
+    title = stringResource(Res.string.design_demo_progress_card_header)
 ) {
     AppProgressBar()
     AppProgressBar(progress = 0.00f)
@@ -239,8 +239,8 @@ private fun SampleDesignProgress() = SampleDesignCardItem(
 }
 
 @Composable
-private fun SampleDesignSpacers() = SampleDesignCardItem(
-    title = stringResource(Res.string.sample_design_spacers_card_header)
+private fun DesignDemoSpacers() = DesignDemoCardItem(
+    title = stringResource(Res.string.design_demo_spacers_card_header)
 ) {
     AppButtonRow(horizontalAlignment = Alignment.Start) {
         AppSectionSpacer(modifier = Modifier.background(AppTheme.colors.primary))
@@ -250,7 +250,7 @@ private fun SampleDesignSpacers() = SampleDesignCardItem(
 }
 
 @Composable
-private fun SampleDesignCardItem(
+private fun DesignDemoCardItem(
     title: String,
     content: @Composable ColumnScope.() -> Unit
 ) = AppCard(
@@ -267,8 +267,8 @@ private fun SampleDesignCardItem(
 @ScreenPreview
 @Composable
 private fun ScreenPreview() = AppTheme {
-    SampleDesignScreen(
-        viewState = SampleDesignViewState(
+    DesignDemoScreen(
+        viewState = DesignDemoViewState(
             screenState = ScreenStateUiModel.Content
         ),
         intent = {}

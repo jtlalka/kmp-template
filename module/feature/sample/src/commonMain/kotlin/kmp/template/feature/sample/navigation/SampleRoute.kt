@@ -10,13 +10,16 @@ internal sealed interface SampleRoute : NavKey {
     data object HomeDestination : SampleRoute
 
     @Serializable
-    data object SampleDesignDestination : SampleRoute
+    data object DesignDemoDestination : SampleRoute
 
     @Serializable
-    data object SampleEnvironmentDestination : SampleRoute
+    data object EnvironmentDemoDestination : SampleRoute
 
     @Serializable
     data object StorageDemoDestination : SampleRoute
+
+    @Serializable
+    data object NetworkDemoDestination : SampleRoute
 
     @Serializable
     data object AboutDestination : SampleRoute
