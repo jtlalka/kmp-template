@@ -1,6 +1,7 @@
 # GitHub project verification workflow
 name: "Project Check"
 on:
+  workflow_dispatch:
   pull_request:
     types: [opened, synchronize, reopened]
 
