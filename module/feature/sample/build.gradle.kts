@@ -14,6 +14,7 @@ kotlin {
             implementation(projects.module.library.environment)
             implementation(projects.module.library.foundation)
             implementation(projects.module.library.navigation)
+            implementation(projects.module.library.network)
             implementation(projects.module.library.preferences)
 
             implementation(libs.bundles.compose)
@@ -21,6 +22,9 @@ kotlin {
             implementation(libs.bundles.navigation)
             implementation(libs.koin.compose)
             implementation(libs.koin.viewmodel)
+
+            implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.ktor.client.core)
 
             implementation(libs.kermit)
         }

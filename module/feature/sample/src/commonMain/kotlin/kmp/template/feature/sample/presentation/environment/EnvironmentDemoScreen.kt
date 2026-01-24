@@ -13,29 +13,29 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kmp.template.design.annotation.ScreenPreview
 import kmp.template.design.component.base.AppCard
-import kmp.template.design.component.base.AppComponentSpacer
+import kmp.template.design.component.base.AppDivider
+import kmp.template.design.component.base.AppHeadlineTextStyle
 import kmp.template.design.component.base.AppIcon
 import kmp.template.design.component.base.AppScaffold
 import kmp.template.design.component.base.AppText
-import kmp.template.design.component.base.AppTitleTextStyle
 import kmp.template.design.component.topbar.AppTopCenterBar
 import kmp.template.design.theme.AppTheme
-import kmp.template.feature.sample.presentation.environment.SampleEnvironmentIntent.NavigateBackPressed
+import kmp.template.feature.sample.presentation.environment.EnvironmentDemoIntent.NavigateBackPressed
 import kmp.template.foundation.lifecycle.SideEffectDispatcher
 import kmp.template.navigation.Navigator
 import kmp.template.navigation.NavigatorEvent
 import kmp_template.module.feature.sample.generated.resources.Res
-import kmp_template.module.feature.sample.generated.resources.sample_environment_app_id_label
-import kmp_template.module.feature.sample.generated.resources.sample_environment_card_header
-import kmp_template.module.feature.sample.generated.resources.sample_environment_debug_label
-import kmp_template.module.feature.sample.generated.resources.sample_environment_name_label
-import kmp_template.module.feature.sample.generated.resources.sample_environment_screen_header
-import kmp_template.module.feature.sample.generated.resources.sample_environment_version_label
+import kmp_template.module.feature.sample.generated.resources.environment_demo_app_id_label
+import kmp_template.module.feature.sample.generated.resources.environment_demo_card_header
+import kmp_template.module.feature.sample.generated.resources.environment_demo_debug_label
+import kmp_template.module.feature.sample.generated.resources.environment_demo_name_label
+import kmp_template.module.feature.sample.generated.resources.environment_demo_screen_header
+import kmp_template.module.feature.sample.generated.resources.environment_demo_version_label
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun SampleEnvironmentScreen(
-    viewModel: SampleEnvironmentViewModel,
+internal fun EnvironmentDemoScreen(
+    viewModel: EnvironmentDemoViewModel,
     navigator: Navigator
 ) {
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
@@ -46,24 +46,24 @@ internal fun SampleEnvironmentScreen(
         }
     }
 
-    SampleEnvironmentScreen(
+    EnvironmentDemoScreen(
         viewState = viewState,
-        intent = viewModel::processIntent
+        intent = viewModel::onIntent
     )
 }
 
 @Composable
-private fun SampleEnvironmentScreen(
-    viewState: SampleEnvironmentViewState,
-    intent: (SampleEnvironmentIntent) -> Unit
+private fun EnvironmentDemoScreen(
+    viewState: EnvironmentDemoViewState,
+    intent: (EnvironmentDemoIntent) -> Unit
 ) = AppScaffold(
     topBar = {
-        SampleEnvironmentTopBar(
+        EnvironmentDemoTopBar(
             intent = intent
         )
     },
     content = { contentPadding ->
-        SampleEnvironmentContent(
+        EnvironmentDemoContent(
             viewState = viewState,
             modifier = Modifier
                 .fillMaxWidth()
@@ -74,11 +74,11 @@ private fun SampleEnvironmentScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SampleEnvironmentTopBar(
-    intent: (SampleEnvironmentIntent) -> Unit
+private fun EnvironmentDemoTopBar(
+    intent: (EnvironmentDemoIntent) -> Unit
 ) = AppTopCenterBar(
     title = {
-        AppText(text = stringResource(Res.string.sample_environment_screen_header))
+        AppText(text = stringResource(Res.string.environment_demo_screen_header))
     },
     navigationIcon = {
         IconButton(onClick = { intent(NavigateBackPressed) }) {
@@ -88,8 +88,8 @@ private fun SampleEnvironmentTopBar(
 )
 
 @Composable
-private fun SampleEnvironmentContent(
-    viewState: SampleEnvironmentViewState,
+private fun EnvironmentDemoContent(
+    viewState: EnvironmentDemoViewState,
     modifier: Modifier
 ) = LazyColumn(
     modifier = modifier,
@@ -102,7 +102,7 @@ private fun SampleEnvironmentContent(
     )
 ) {
     item {
-        SampleEnvironmentCard(
+        EnvironmentDemoCard(
             viewState = viewState,
             modifier = Modifier.fillMaxWidth()
         )
@@ -110,28 +110,29 @@ private fun SampleEnvironmentContent(
 }
 
 @Composable
-private fun SampleEnvironmentCard(
-    viewState: SampleEnvironmentViewState,
+private fun EnvironmentDemoCard(
+    viewState: EnvironmentDemoViewState,
     modifier: Modifier
 ) = AppCard(
-    modifier = modifier
+    modifier = modifier,
+    itemPadding = AppTheme.dimensions.spaceMd
 ) {
-    AppTitleTextStyle {
-        AppText(stringResource(Res.string.sample_environment_card_header))
+    AppHeadlineTextStyle {
+        AppText(stringResource(Res.string.environment_demo_card_header))
     }
-    AppComponentSpacer()
+    AppDivider()
 
-    AppText(stringResource(Res.string.sample_environment_name_label, viewState.environmentName))
-    AppText(stringResource(Res.string.sample_environment_app_id_label, viewState.applicationId))
-    AppText(stringResource(Res.string.sample_environment_version_label, viewState.versionName))
-    AppText(stringResource(Res.string.sample_environment_debug_label, viewState.debugLabel))
+    AppText(stringResource(Res.string.environment_demo_name_label, viewState.environmentName))
+    AppText(stringResource(Res.string.environment_demo_app_id_label, viewState.applicationId))
+    AppText(stringResource(Res.string.environment_demo_version_label, viewState.versionName))
+    AppText(stringResource(Res.string.environment_demo_debug_label, viewState.debugLabel))
 }
 
 @ScreenPreview
 @Composable
 private fun ScreenPreview() = AppTheme {
-    SampleEnvironmentScreen(
-        viewState = SampleEnvironmentViewState(
+    EnvironmentDemoScreen(
+        viewState = EnvironmentDemoViewState(
             environmentName = "iOS",
             applicationId = "kmp.template",
             versionName = "1.0.0",

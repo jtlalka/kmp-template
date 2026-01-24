@@ -1,13 +1,13 @@
 package kmp.template.feature.sample.presentation.environment
 
 import kmp.template.environment.Environment
-import kmp.template.feature.sample.presentation.environment.SampleEnvironmentIntent.NavigateBackPressed
+import kmp.template.feature.sample.presentation.environment.EnvironmentDemoIntent.NavigateBackPressed
 import kmp.template.foundation.mvi.MviViewModel
 import kmp.template.navigation.NavigatorEvent.NavigateUp
 
-internal class SampleEnvironmentViewModel(
+internal class EnvironmentDemoViewModel(
     private val environment: Environment
-) : MviViewModel<SampleEnvironmentViewState>(SampleEnvironmentViewState()) {
+) : MviViewModel<EnvironmentDemoViewState>(EnvironmentDemoViewState()) {
 
     init {
         initViewState()
@@ -22,7 +22,7 @@ internal class SampleEnvironmentViewModel(
         )
     }
 
-    fun processIntent(intent: SampleEnvironmentIntent) {
+    fun onIntent(intent: EnvironmentDemoIntent) {
         when (intent) {
             is NavigateBackPressed -> onNavigateBackPressed()
         }

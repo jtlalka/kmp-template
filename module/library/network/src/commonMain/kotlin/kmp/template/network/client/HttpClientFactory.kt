@@ -20,6 +20,7 @@ internal object HttpClientFactory {
                 Json {
                     ignoreUnknownKeys = true
                     useAlternativeNames = false
+                    coerceInputValues = true
                 }
             )
         }
